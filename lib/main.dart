@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sandwich_shop/views/auth_screen.dart';
 import 'package:sandwich_shop/views/order_screen.dart';
 import 'package:sandwich_shop/views/about_screen.dart';
 
@@ -15,7 +16,9 @@ class App extends StatelessWidget {
       title: 'Sandwich Shop App',
       home: const OrderScreen(maxQuantity: 5),
       routes: {
+        '/order': (context) => const OrderScreen(maxQuantity: 5),
         '/about': (context) => const AboutScreen(),
+        '/auth': (context) => const AuthScreen(),
       },
     );
   }
