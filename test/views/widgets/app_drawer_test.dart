@@ -48,4 +48,20 @@ void main() {
     expectColor('Order', null);
     expectColor('About', null);
   });
+
+  testWidgets('AppDrawer highlights About route correctly', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: AppDrawer(currentRoute: '/about'),
+        ),
+      ),
+    );
+
+    final textWidget = tester.widget<Text>(find.text('About'));
+    expect(textWidget.style?.color, Colors.blue);
+    
+    final orderTextWidget = tester.widget<Text>(find.text('Order'));
+    expect(orderTextWidget.style?.color, null);
+  });
 }
