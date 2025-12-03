@@ -41,8 +41,9 @@ void main() {
       expect(find.text('Cart View'), findsOneWidget);
       expect(find.text('Veggie Delight'), findsOneWidget);
       expect(find.text('Footlong on white bread'), findsOneWidget);
-      expect(find.text('Qty: 2 - £22.00'), findsOneWidget);
-      expect(find.text('Total: £22.00'), findsOneWidget);
+      expect(find.text('2'), findsOneWidget); // Quantity
+      expect(find.text('£22.00'), findsOneWidget); // Item price
+      expect(find.text('Total: £22.00'), findsOneWidget); // Total price
     });
 
     testWidgets('displays multiple cart items correctly',
@@ -72,8 +73,13 @@ void main() {
       expect(find.text('Chicken Teriyaki'), findsOneWidget);
       expect(find.text('Footlong on white bread'), findsOneWidget);
       expect(find.text('Six-inch on wheat bread'), findsOneWidget);
-      expect(find.text('Qty: 1 - £11.00'), findsOneWidget);
-      expect(find.text('Qty: 3 - £21.00'), findsOneWidget);
+      
+      expect(find.text('1'), findsOneWidget);
+      expect(find.text('£11.00'), findsOneWidget);
+      
+      expect(find.text('3'), findsOneWidget);
+      expect(find.text('£21.00'), findsOneWidget);
+      
       expect(find.text('Total: £32.00'), findsOneWidget);
     });
 
@@ -135,8 +141,63 @@ void main() {
 
       await tester.pumpWidget(app);
 
-      expect(find.text('Qty: 3 - £33.00'), findsOneWidget);
-      expect(find.text('Total: £33.00'), findsOneWidget);
+      expect(find.text('3'), findsOneWidget);
+      expect(find.text('£33.00'), findsOneWidget); // Item price
+      expect(find.text('Total: £33.00'), findsOneWidget); // Total price
+    });
+
+    testWidgets('increment button increases quantity', (WidgetTester tester) async {
+      final Cart cart = Cart();
+      final Sandwich sandwich = Sandwich(
+        type: SandwichType.veggieDelight,
+        isFootlong: false,
+        breadType: BreadType.white,
+      );
+      cart.add(sandwich, quantity: 1);
+
+      await tester.pumpWidget(MaterialApp(home: CartScreen(cart: cart)));
+
+      await tester.tap(find.byIcon(Icons.add_circle_outline));
+      await tester.pump();
+
+      expect(cart.getQuantity(sandwich), 2);
+      expect(find.text('2'), findsOneWidget);
+    });
+
+    testWidgets('decrement button decreases quantity', (WidgetTester tester) async {
+      final Cart cart = Cart();
+      final Sandwich sandwich = Sandwich(
+        type: SandwichType.veggieDelight,
+        isFootlong: false,
+        breadType: BreadType.white,
+      );
+      cart.add(sandwich, quantity: 2);
+
+      await tester.pumpWidget(MaterialApp(home: CartScreen(cart: cart)));
+
+      await tester.tap(find.byIcon(Icons.remove_circle_outline));
+      await tester.pump();
+
+      expect(cart.getQuantity(sandwich), 1);
+      expect(find.text('1'), findsOneWidget);
+    });
+
+    testWidgets('decrement button shows remove dialog when quantity is 1', (WidgetTester tester) async {
+      final Cart cart = Cart();
+      final Sandwich sandwich = Sandwich(
+        type: SandwichType.veggieDelight,
+        isFootlong: false,
+        breadType: BreadType.white,
+      );
+      cart.add(sandwich, quantity: 1);
+
+      await tester.pumpWidget(MaterialApp(home: CartScreen(cart: cart)));
+
+      await tester.tap(find.byIcon(Icons.remove_circle_outline));
+      await tester.pump();
+
+      expect(find.text('Remove Item?'), findsOneWidget);
+      expect(find.text('Remove'), findsOneWidget);
     });
   });
 }
