@@ -41,4 +41,29 @@ class Sandwich {
     }
     return 'assets/images/${typeString}_$sizeString.png';
   }
+
+  Sandwich copyWith({
+    SandwichType? type,
+    bool? isFootlong,
+    BreadType? breadType,
+  }) {
+    return Sandwich(
+      type: type ?? this.type,
+      isFootlong: isFootlong ?? this.isFootlong,
+      breadType: breadType ?? this.breadType,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Sandwich &&
+        other.type == type &&
+        other.isFootlong == isFootlong &&
+        other.breadType == breadType;
+  }
+
+  @override
+  int get hashCode => type.hashCode ^ isFootlong.hashCode ^ breadType.hashCode;
 }
