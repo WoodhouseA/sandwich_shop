@@ -43,12 +43,6 @@ Run the app
 flutter run
 ```
 
-- To run on Windows (desktop):
-
-```powershell
-flutter run -d windows
-```
-
 ## How to Use
 
 Open the app and you'll see the main order screen:
