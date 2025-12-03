@@ -509,11 +509,11 @@
 
 ###  Implementation Tasks
 
-- [ ] **Component:** Create a reusable `AppDrawer` widget with navigation links.
-- [ ] **Responsive Layout:** Create a `ResponsiveScaffold` widget that switches between a modal Drawer (mobile) and permanent Sidebar (desktop).
-- [ ] **Integration:** Refactor existing screens (`OrderScreen`, `CartScreen`, `AboutScreen`, `AuthScreen`) to use `ResponsiveScaffold`.
-- [ ] **State:** Ensure the active route is highlighted in the navigation.
-- [ ] **Testing:** Widget tests for drawer opening, navigation, and responsive layout changes.
+- [x] **Component:** Create a reusable `AppDrawer` widget with navigation links.
+- [x] **Responsive Layout:** Create a `ResponsiveScaffold` widget that switches between a modal Drawer (mobile) and permanent Sidebar (desktop).
+- [x] **Integration:** Refactor existing screens (`OrderScreen`, `CartScreen`, `AboutScreen`, `AuthScreen`) to use `ResponsiveScaffold`.
+- [x] **State:** Ensure the active route is highlighted in the navigation.
+- [x] **Testing:** Widget tests for drawer opening, navigation, and responsive layout changes.
 
 ---
 
@@ -527,15 +527,15 @@
 
 ###  Acceptance Criteria
 
-- [ ] **Drawer:** Hamburger menu appears on mobile; tapping it opens the drawer.
-- [ ] **Sidebar:** Menu is permanently visible on screens wider than 600px.
-- [ ] **Navigation:** Tapping a link navigates to the correct screen.
-- [ ] **Highlight:** The current screen is visually highlighted in the menu.
+- [x] **Drawer:** Hamburger menu appears on mobile; tapping it opens the drawer.
+- [x] **Sidebar:** Menu is permanently visible on screens wider than 600px.
+- [x] **Navigation:** Tapping a link navigates to the correct screen.
+- [x] **Highlight:** The current screen is visually highlighted in the menu.
 
 ---
 
 ###  Test Coverage
 
-- [ ] **Widget:** Verify Drawer opens on mobile.
-- [ ] **Widget:** Verify Sidebar exists on desktop.
-- [ ] **Widget:** Verify navigation links work.
+- [x] **Widget:** Verify Drawer opens on mobile.
+- [x] **Widget:** Verify Sidebar exists on desktop.
+- [x] **Widget:** Verify navigation links work.
