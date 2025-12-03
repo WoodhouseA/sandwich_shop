@@ -67,4 +67,24 @@ void main() {
     await tester.pump();
     expect(find.text('Password must be at least 6 characters'), findsOneWidget);
   });
+
+  testWidgets('Sign Up requires matching passwords', (WidgetTester tester) async {
+    await tester.pumpWidget(createWidgetUnderTest());
+
+    // Switch to Sign Up
+    await tester.tap(find.text('Need an account? Sign Up'));
+    await tester.pump();
+
+    // Enter valid email and password
+    await tester.enterText(find.widgetWithText(TextFormField, 'Email'), 'test@example.com');
+    await tester.enterText(find.widgetWithText(TextFormField, 'Password'), 'password123');
+
+    // Enter MISMATCHING confirm password
+    await tester.enterText(find.widgetWithText(TextFormField, 'Confirm Password'), 'different');
+    
+    await tester.tap(find.widgetWithText(ElevatedButton, 'Sign Up'));
+    await tester.pump();
+
+    expect(find.text('Passwords do not match'), findsOneWidget);
+  });
 }
