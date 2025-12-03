@@ -18,4 +18,34 @@ void main() {
     expect(find.text('About'), findsOneWidget);
     expect(find.text('Sign In / Sign Up'), findsOneWidget);
   });
+
+  testWidgets('AppDrawer highlights the current route', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: AppDrawer(currentRoute: '/cart'),
+        ),
+      ),
+    );
+
+    // Helper to check color
+    void expectColor(String text, Color? color) {
+      final textWidget = tester.widget<Text>(find.text(text));
+      expect(textWidget.style?.color, color);
+      
+      final listTile = tester.widget<ListTile>(find.ancestor(
+        of: find.text(text),
+        matching: find.byType(ListTile),
+      ));
+      final icon = listTile.leading as Icon;
+      expect(icon.color, color);
+    }
+
+    // Cart should be blue (highlighted)
+    expectColor('Cart', Colors.blue);
+
+    // Others should be null (default color)
+    expectColor('Order', null);
+    expectColor('About', null);
+  });
 }
