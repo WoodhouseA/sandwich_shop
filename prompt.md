@@ -147,3 +147,24 @@ Please produce implementation guidance and code snippets for the following cart-
     notifyListeners();
   }
   ```
+---
+
+**Sign In / Sign Up Page**:
+- Description: A dedicated screen for users to authenticate. It should support both signing in and creating a new account, potentially via a toggle or tab.
+- UI behavior:
+  - Clean, centered layout that is easy to interpret.
+  - Text fields for "Email" and "Password".
+  - For Sign Up, include a "Confirm Password" field.
+  - "Sign In" / "Sign Up" primary button.
+  - A way to switch between modes (e.g., "Don't have an account? Sign up").
+  - Validation feedback (e.g., invalid email format, short password) shown inline or via snackbar.
+  - Loading state on the button during authentication.
+- Data/model behavior:
+  - Create a UserRepository or AuthService (mock for now, or prepared for Firebase/API).
+  - Methods: signIn(email, password), signUp(email, password).
+  - Handle success (navigate to Order Screen) and failure (show error message).
+- Edge cases & errors:
+  - Network errors.
+  - Invalid credentials.
+  - User already exists (for sign up).
+  - Empty fields.
