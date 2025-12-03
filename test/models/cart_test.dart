@@ -141,5 +141,33 @@ void main() {
       cart.removeItem(sandwichA);
       expect(cart.items.containsKey(sandwichA), isFalse);
     });
+
+    test('replaceItem should replace old item with new item and preserve quantity', () {
+      cart.add(sandwichA, quantity: 3);
+      cart.replaceItem(sandwichA, sandwichB);
+      
+      expect(cart.items.containsKey(sandwichA), isFalse);
+      expect(cart.items.containsKey(sandwichB), isTrue);
+      expect(cart.getQuantity(sandwichB), 3);
+    });
+
+    test('replaceItem should merge quantities if new item already exists', () {
+      cart.add(sandwichA, quantity: 2);
+      cart.add(sandwichB, quantity: 3);
+      
+      cart.replaceItem(sandwichA, sandwichB);
+      
+      expect(cart.items.containsKey(sandwichA), isFalse);
+      expect(cart.getQuantity(sandwichB), 5); // 3 existing + 2 from sandwichA
+    });
+
+    test('restoreRemovedItem should add item back with specified quantity', () {
+      cart.restoreRemovedItem(sandwichA, 3);
+      expect(cart.getQuantity(sandwichA), 3);
+      
+      // Should add to existing if present
+      cart.restoreRemovedItem(sandwichA, 2);
+      expect(cart.getQuantity(sandwichA), 5);
+    });
   });
 }
