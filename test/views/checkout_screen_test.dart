@@ -66,5 +66,47 @@ void main() {
       // Finish the timer to avoid pending timer exception
       await tester.pump(const Duration(seconds: 2));
     });
+
+    testWidgets('navigates back with order confirmation after processing',
+        (WidgetTester tester) async {
+      // Arrange
+      cart.add(sandwich1);
+      Map? returnedResult;
+
+      await tester.pumpWidget(MaterialApp(
+        home: Builder(
+          builder: (context) => ElevatedButton(
+            onPressed: () async {
+              returnedResult = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CheckoutScreen(cart: cart),
+                ),
+              );
+            },
+            child: const Text('Go to Checkout'),
+          ),
+        ),
+      ));
+
+      // Navigate to checkout
+      await tester.tap(find.text('Go to Checkout'));
+      await tester.pumpAndSettle();
+
+      // Act - Confirm Payment
+      await tester.tap(find.text('Confirm Payment'));
+      await tester.pump(); // Rebuild to show loading
+
+      // Wait for the 2-second delay
+      await tester.pump(const Duration(seconds: 2));
+      await tester.pumpAndSettle(); // Handle navigation animation
+
+      // Assert
+      expect(find.text('Go to Checkout'), findsOneWidget); // Should be back at home
+      expect(returnedResult, isNotNull);
+      expect(returnedResult!['totalAmount'], equals(7.00));
+      expect(returnedResult!['itemCount'], equals(1));
+      expect(returnedResult!['orderId'], isNotNull);
+    });
   });
 }
