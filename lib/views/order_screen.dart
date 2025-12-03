@@ -232,6 +232,13 @@ class _OrderScreenState extends State<OrderScreen> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/auth');
+                },
+                child: const Text('Sign In / Sign Up'),
+              ),
+              const SizedBox(height: 20),
             ],
           ),
         ),
