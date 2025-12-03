@@ -108,7 +108,7 @@
 - [x] **Input Logic:** Restrict input to digits only.
 - [x] **Validation:** Handle 0 (remove), >99 (cap), and invalid text.
 - [x] **Model Update:** Reuse Cart.updateItemQuantity.
-- [ ] **Testing:** Widget tests for dialog interaction and validation.
+- [x] **Testing:** Widget tests for dialog interaction and validation.
 
 ---
 
@@ -152,9 +152,9 @@
 
 ###  Test Coverage
 
-- [ ] **Widget:** Tap quantity -> Dialog appears.
-- [ ] **Widget:** Enter '5' -> Confirm -> Quantity becomes 5.
-- [ ] **Widget:** Enter '0' -> Confirm -> Removal dialog appears.
+- [x] **Widget:** Tap quantity -> Dialog appears.
+- [x] **Widget:** Enter '5' -> Confirm -> Quantity becomes 5.
+- [x] **Widget:** Enter '0' -> Confirm -> Removal dialog appears.
 
 
 ##  Feature: Remove Item (Delete / Swipe-to-Delete)
@@ -379,10 +379,10 @@
 
 ###  Implementation Tasks
 
-- [ ] **Undo:** Ensure all destructive actions have an Undo path.
-- [ ] **Feedback:** Use Snackbars/Toasts for confirmation.
-- [ ] **A11y Labels:** Add semanticLabel to IconButtons.
-- [ ] **Focus Order:** Ensure logical traversal for keyboard/screen readers.
+- [x] **Undo:** Ensure all destructive actions have an Undo path.
+- [x] **Feedback:** Use Snackbars/Toasts for confirmation.
+- [x] **A11y Labels:** Add semanticLabel to IconButtons.
+- [x] **Focus Order:** Ensure logical traversal for keyboard/screen readers.
 
 ---
 
@@ -411,16 +411,16 @@
 
 ###  Acceptance Criteria
 
-- [ ] **Semantics:** Screen reader announces button functions clearly.
-- [ ] **Hit Test:** Buttons are easy to tap (no mis-taps).
-- [ ] **Undo Consistency:** Undo is available for single and bulk removals.
+- [x] **Semantics:** Screen reader announces button functions clearly.
+- [x] **Hit Test:** Buttons are easy to tap (no mis-taps).
+- [x] **Undo Consistency:** Undo is available for single and bulk removals.
 
 ---
 
 ###  Test Coverage
 
-- [ ] **A11y Test:** Verify semantic nodes in widget tree.
-- [ ] **Manual:** Test with TalkBack/VoiceOver (if possible) or SemanticsDebugger.
+- [x] **A11y Test:** Verify semantic nodes in widget tree.
+- [x] **Manual:** Test with TalkBack/VoiceOver (if possible) or SemanticsDebugger.
 
 ##  Feature: Sign In / Sign Up Page
 
@@ -437,13 +437,13 @@
 
 ###  Implementation Tasks
 
-- [ ] **UI Layout:** Create AuthScreen with centered layout, text fields, and action buttons.
-- [ ] **State Management:** Manage form state (email, password, confirm password, mode: sign-in/sign-up, loading status).
-- [ ] **Auth Simulation:** Simulate a network delay before navigating (no real auth service needed).
-- [ ] **Validation:** Implement form validation for email format and password length/matching.
-- [ ] **Navigation:** Route to OrderScreen on success.
-- [ ] **Feedback:** Show loading indicators during processing.
-- [ ] **Testing:** Widget tests for UI switching and interaction.
+- [x] **UI Layout:** Create AuthScreen with centered layout, text fields, and action buttons.
+- [x] **State Management:** Manage form state (email, password, confirm password, mode: sign-in/sign-up, loading status).
+- [x] **Auth Simulation:** Simulate a network delay before navigating (no real auth service needed).
+- [x] **Validation:** Implement form validation for email format and password length/matching.
+- [x] **Navigation:** Route to OrderScreen on success.
+- [x] **Feedback:** Show loading indicators during processing.
+- [x] **Testing:** Widget tests for UI switching and interaction.
 
 ---
 
@@ -480,19 +480,19 @@
 
 ###  Acceptance Criteria
 
-- [ ] **Mode Switch:** Tapping the toggle switches between Sign In and Sign Up forms.
-- [ ] **Validation:** Invalid email or short password prevents submission and shows error.
-- [ ] **Password Match:** Sign Up fails if passwords do not match.
-- [ ] **Success:** Valid inputs navigate to the Order Screen after a simulated delay.
-- [ ] **Loading:** Button shows loading spinner during async operation.
+- [x] **Mode Switch:** Tapping the toggle switches between Sign In and Sign Up forms.
+- [x] **Validation:** Invalid email or short password prevents submission and shows error.
+- [x] **Password Match:** Sign Up fails if passwords do not match.
+- [x] **Success:** Valid inputs navigate to the Order Screen after a simulated delay.
+- [x] **Loading:** Button shows loading spinner during async operation.
 
 ---
 
 ###  Test Coverage
 
-- [ ] **Unit:** Validation logic correctly identifies valid/invalid inputs.
-- [ ] **Widget:** Switching modes shows/hides Confirm Password field.
-- [ ] **Widget:** Tapping button triggers loading state.
+- [x] **Unit:** Validation logic correctly identifies valid/invalid inputs.
+- [x] **Widget:** Switching modes shows/hides Confirm Password field.
+- [x] **Widget:** Tapping button triggers loading state.
 
 ##  Feature: Navigation & Responsive Design
 
