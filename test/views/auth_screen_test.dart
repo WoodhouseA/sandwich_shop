@@ -4,8 +4,11 @@ import 'package:sandwich_shop/views/auth_screen.dart';
 
 void main() {
   Widget createWidgetUnderTest() {
-    return const MaterialApp(
-      home: AuthScreen(),
+    return MaterialApp(
+      home: const AuthScreen(),
+      routes: {
+        '/order': (context) => const Scaffold(body: Text('Order Screen')),
+      },
     );
   }
 
