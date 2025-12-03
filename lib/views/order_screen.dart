@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:sandwich_shop/views/app_styles.dart';
-import 'package:sandwich_shop/views/cart_screen.dart';
 import 'package:sandwich_shop/models/cart.dart';
 import 'package:sandwich_shop/models/sandwich.dart';
+import 'package:sandwich_shop/views/widgets/responsive_scaffold.dart';
 
 class OrderScreen extends StatefulWidget {
   final int maxQuantity;
+  final Cart cart;
 
-  const OrderScreen({super.key, this.maxQuantity = 10});
+  const OrderScreen({super.key, this.maxQuantity = 10, required this.cart});
 
   @override
   State<OrderScreen> createState() {
@@ -16,7 +17,7 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
-  final Cart _cart = Cart();
+  late final Cart _cart;
   final TextEditingController _notesController = TextEditingController();
 
   SandwichType _selectedSandwichType = SandwichType.veggieDelight;
@@ -27,6 +28,7 @@ class _OrderScreenState extends State<OrderScreen> {
   @override
   void initState() {
     super.initState();
+    _cart = widget.cart;
     _notesController.addListener(() {
       setState(() {});
     });
@@ -76,12 +78,7 @@ class _OrderScreenState extends State<OrderScreen> {
   }
 
   void _navigateToCartView() {
-    Navigator.push(
-      context,
-      MaterialPageRoute<void>(
-        builder: (BuildContext context) => CartScreen(cart: _cart),
-      ),
-    );
+    Navigator.pushNamed(context, '/cart');
   }
 
   List<DropdownMenuEntry<SandwichType>> _buildSandwichTypeEntries() {
@@ -121,19 +118,20 @@ class _OrderScreenState extends State<OrderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            height: 100,
+    return ResponsiveScaffold(
+      currentRoute: '/order',
+      title: Row(
+        children: [
+          SizedBox(
+            height: 40,
             child: Image.asset('assets/images/logo.png'),
           ),
-        ),
-        title: const Text(
-          'Sandwich Counter',
-          style: heading1,
-        ),
+          const SizedBox(width: 8),
+          const Text(
+            'Sandwich Counter',
+            style: heading1,
+          ),
+        ],
       ),
       body: Center(
         child: SingleChildScrollView(
