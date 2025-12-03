@@ -134,6 +134,22 @@ class _CartScreenState extends State<CartScreen> {
                     backgroundColor: Colors.grey,
                   ),
                   const SizedBox(height: 20),
+                  Builder(
+                    builder: (BuildContext context) {
+                      final bool cartHasItems = widget.cart.items.isNotEmpty;
+                      if (cartHasItems) {
+                        return StyledButton(
+                          onPressed: _navigateToCheckout,
+                          icon: Icons.payment,
+                          label: 'Checkout',
+                          backgroundColor: Colors.orange,
+                        );
+                      } else {
+                        return const SizedBox.shrink();
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
