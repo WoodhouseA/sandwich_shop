@@ -421,3 +421,75 @@
 
 - [ ] **A11y Test:** Verify semantic nodes in widget tree.
 - [ ] **Manual:** Test with TalkBack/VoiceOver (if possible) or SemanticsDebugger.
+
+##  Feature: Sign In / Sign Up Page
+
+###  Overview
+**Purpose:** Provide a user-friendly entry point for users to access the app.
+**Goal:** Create the UI for authentication with clear feedback and smooth transitions between modes (Logic is mocked).
+
+###  Definitions & Assumptions
+*   **Auth Logic:** No real backend; successful login is simulated.
+*   **Valid Email:** Standard email regex format.
+*   **Valid Password:** Minimum 6 characters.
+
+---
+
+###  Implementation Tasks
+
+- [ ] **UI Layout:** Create AuthScreen with centered layout, text fields, and action buttons.
+- [ ] **State Management:** Manage form state (email, password, confirm password, mode: sign-in/sign-up, loading status).
+- [ ] **Auth Simulation:** Simulate a network delay before navigating (no real auth service needed).
+- [ ] **Validation:** Implement form validation for email format and password length/matching.
+- [ ] **Navigation:** Route to OrderScreen on success.
+- [ ] **Feedback:** Show loading indicators during processing.
+- [ ] **Testing:** Widget tests for UI switching and interaction.
+
+---
+
+###  User Stories
+
+*   **US-21:** As a user, I want to sign in with my email and password to access the app.
+*   **US-22:** As a new user, I want to create an account so I can start ordering.
+*   **US-23:** As a user, I want to see clear error messages if I enter invalid details.
+*   **US-24:** As a user, I want to easily switch between signing in and signing up.
+
+---
+
+###  Detailed Requirements
+
+#### UI Controls
+*   **Email TextField:** KeyboardType.emailAddress.
+*   **Password TextField:** ObscureText enabled.
+*   **Confirm Password TextField:** Only visible in Sign Up mode.
+*   **Primary Action Button:** Label changes based on mode ("Sign In" or "Sign Up").
+*   **Toggle Button:** Text button to switch modes (e.g., "Need an account? Sign Up").
+*   **Loading Indicator:** Replaces button text or disables button when processing.
+
+#### Data / Model
+*   **No Actual Authentication:** The "Sign In" and "Sign Up" buttons should simulate a delay (e.g., 1 second) and then navigate to the Order Screen.
+*   **Validation Logic:**
+    *   Email: Not empty, valid regex.
+    *   Password: Min 6 chars.
+    *   Confirm Password: Must match Password (Sign Up only).
+
+#### Edge Cases
+*   **Empty Fields:** Disable button or show inline errors.
+
+---
+
+###  Acceptance Criteria
+
+- [ ] **Mode Switch:** Tapping the toggle switches between Sign In and Sign Up forms.
+- [ ] **Validation:** Invalid email or short password prevents submission and shows error.
+- [ ] **Password Match:** Sign Up fails if passwords do not match.
+- [ ] **Success:** Valid inputs navigate to the Order Screen after a simulated delay.
+- [ ] **Loading:** Button shows loading spinner during async operation.
+
+---
+
+###  Test Coverage
+
+- [ ] **Unit:** Validation logic correctly identifies valid/invalid inputs.
+- [ ] **Widget:** Switching modes shows/hides Confirm Password field.
+- [ ] **Widget:** Tapping button triggers loading state.
