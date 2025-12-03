@@ -45,5 +45,26 @@ void main() {
       expect(find.text('Payment Method: Card ending in 1234'), findsOneWidget);
       expect(find.text('Confirm Payment'), findsOneWidget);
     });
+
+    testWidgets('shows loading state when payment is confirmed',
+        (WidgetTester tester) async {
+      // Arrange
+      cart.add(sandwich1);
+      await tester.pumpWidget(MaterialApp(
+        home: CheckoutScreen(cart: cart),
+      ));
+
+      // Act
+      await tester.tap(find.text('Confirm Payment'));
+      await tester.pump(); // Start the animation/state change
+
+      // Assert
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      expect(find.text('Processing payment...'), findsOneWidget);
+      expect(find.text('Confirm Payment'), findsNothing);
+
+      // Finish the timer to avoid pending timer exception
+      await tester.pump(const Duration(seconds: 2));
+    });
   });
 }
