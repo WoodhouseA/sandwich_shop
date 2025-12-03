@@ -252,5 +252,23 @@ void main() {
       expect(cart.getQuantity(sandwich), 1);
       expect(find.text('Veggie Delight'), findsOneWidget);
     });
+
+    testWidgets('edit button opens edit sheet', (WidgetTester tester) async {
+      final Cart cart = Cart();
+      final Sandwich sandwich = Sandwich(
+        type: SandwichType.veggieDelight,
+        isFootlong: false,
+        breadType: BreadType.white,
+      );
+      cart.add(sandwich, quantity: 1);
+
+      await tester.pumpWidget(MaterialApp(home: CartScreen(cart: cart)));
+
+      await tester.tap(find.byIcon(Icons.edit));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Edit Sandwich'), findsOneWidget);
+      expect(find.text('Save Changes'), findsOneWidget);
+    });
   });
 }
