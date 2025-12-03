@@ -160,11 +160,8 @@ Please produce implementation guidance and code snippets for the following cart-
   - Validation feedback (e.g., invalid email format, short password) shown inline or via snackbar.
   - Loading state on the button during authentication.
 - Data/model behavior:
-  - Create a UserRepository or AuthService (mock for now, or prepared for Firebase/API).
-  - Methods: signIn(email, password), signUp(email, password).
-  - Handle success (navigate to Order Screen) and failure (show error message).
+  - **No actual authentication logic required.**
+  - Simulate a network delay (e.g., 1 second) when the button is pressed.
+  - On success (after delay), navigate to the Order Screen.
 - Edge cases & errors:
-  - Network errors.
-  - Invalid credentials.
-  - User already exists (for sign up).
   - Empty fields.
