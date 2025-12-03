@@ -36,4 +36,30 @@ void main() {
     // Verify Drawer is shown
     expect(find.byType(AppDrawer), findsOneWidget);
   });
+
+  testWidgets('ResponsiveScaffold shows Sidebar on desktop',
+      (WidgetTester tester) async {
+    // Set screen size to desktop
+    tester.view.physicalSize = const Size(1200, 800);
+    tester.view.devicePixelRatio = 1.0;
+
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: ResponsiveScaffold(
+          body: Text('Body Content'),
+          title: Text('Title'),
+          currentRoute: '/test',
+        ),
+      ),
+    );
+
+    // Verify body is shown
+    expect(find.text('Body Content'), findsOneWidget);
+
+    // Verify AppDrawer is shown permanently
+    expect(find.byType(AppDrawer), findsOneWidget);
+
+    // Verify Hamburger menu does NOT exist (automaticallyImplyLeading: false)
+    expect(find.byIcon(Icons.menu), findsNothing);
+  });
 }
