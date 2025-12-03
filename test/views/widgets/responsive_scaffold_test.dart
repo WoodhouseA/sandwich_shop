@@ -62,4 +62,62 @@ void main() {
     // Verify Hamburger menu does NOT exist (automaticallyImplyLeading: false)
     expect(find.byIcon(Icons.menu), findsNothing);
   });
+
+  testWidgets('Navigation links navigate to correct routes',
+      (WidgetTester tester) async {
+    // Set screen size to mobile to use Drawer
+    tester.view.physicalSize = const Size(400, 800);
+    tester.view.devicePixelRatio = 1.0;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        initialRoute: '/order',
+        routes: {
+          '/order': (context) => const ResponsiveScaffold(
+                body: Text('Order Screen'),
+                title: Text('Order'),
+                currentRoute: '/order',
+              ),
+          '/cart': (context) => const ResponsiveScaffold(
+                body: Text('Cart Screen'),
+                title: Text('Cart'),
+                currentRoute: '/cart',
+              ),
+          '/about': (context) => const ResponsiveScaffold(
+                body: Text('About Screen'),
+                title: Text('About'),
+                currentRoute: '/about',
+              ),
+          '/auth': (context) => const ResponsiveScaffold(
+                body: Text('Auth Screen'),
+                title: Text('Auth'),
+                currentRoute: '/auth',
+              ),
+        },
+      ),
+    );
+
+    // Open drawer
+    await tester.tap(find.byIcon(Icons.menu));
+    await tester.pumpAndSettle();
+
+    // Tap Cart link
+    await tester.tap(find.text('Cart'));
+    await tester.pumpAndSettle();
+
+    // Verify navigation to Cart
+    expect(find.text('Cart Screen'), findsOneWidget);
+    expect(find.text('Order Screen'), findsNothing);
+
+    // Open drawer again (on Cart screen)
+    await tester.tap(find.byIcon(Icons.menu));
+    await tester.pumpAndSettle();
+
+    // Tap About link
+    await tester.tap(find.text('About'));
+    await tester.pumpAndSettle();
+
+    // Verify navigation to About
+    expect(find.text('About Screen'), findsOneWidget);
+  });
 }
