@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sandwich_shop/views/order_screen.dart';
+import 'package:sandwich_shop/views/widgets/responsive_scaffold.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -48,17 +48,14 @@ class _AuthScreenState extends State<AuthScreen> {
     });
 
     // Navigate to OrderScreen
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const OrderScreen(maxQuantity: 5)),
-    );
+    Navigator.of(context).pushNamedAndRemoveUntil('/order', (route) => false);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(_isSignUp ? 'Sign Up' : 'Sign In'),
-      ),
+    return ResponsiveScaffold(
+      currentRoute: '/auth',
+      title: Text(_isSignUp ? 'Sign Up' : 'Sign In'),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
