@@ -299,3 +299,125 @@
 - [ ] **Unit:** ReplaceItem updates sandwich details correctly.
 - [ ] **Unit:** Changing size triggers price recalculation.
 - [ ] **Widget:** Edit flow -> Open sheet -> Change value -> Save -> Verify UI update.
+
+##  Feature: Batch / Multi-Select Actions (Optional)
+
+###  Overview
+**Purpose:** Allow users to select multiple cart items and apply actions (remove, etc.) in bulk.
+**Goal:** Improve efficiency for managing large orders.
+
+###  Definitions & Assumptions
+*   **Trigger:** Long-press on an item enters selection mode.
+*   **Toolbar:** Appears when items are selected, replacing the app bar or floating.
+
+---
+
+###  Implementation Tasks
+
+- [ ] **UI Interaction:** Implement long-press gesture and selection state.
+- [ ] **Selection Mode:** Show checkboxes or visual highlight for selected items.
+- [ ] **Toolbar:** Create action bar with "Remove" (and optionally +/-).
+- [ ] **Model Update:** Implement Cart.removeItems(List<itemId>).
+- [ ] **Testing:** Widget tests for selection and bulk removal.
+
+---
+
+###  User Stories
+
+*   **US-16:** As a shopper, I want to select multiple items to remove them all at once.
+*   **US-17:** As a shopper, I want to clearly see which items are selected.
+
+---
+
+###  Detailed Requirements
+
+#### UI Controls
+*   **Long-Press:** Enters multi-select mode.
+*   **Checkboxes:** Appear on left/right of items.
+*   **Context Bar:** Shows "X items selected" and action buttons (Trash).
+*   **Cancel:** Back button or "Cancel" exits selection mode.
+
+#### Data / Model
+*   Cart.removeItems(List<String> itemIds):
+    *   Remove all specified items.
+    *   Store list of removed items for Undo (Bulk Undo).
+    *   Recalculate total.
+
+#### Edge Cases
+*   **Select All:** Optional "Select All" button.
+*   **Empty Selection:** Toolbar actions disabled if 0 items selected.
+
+---
+
+###  Acceptance Criteria
+
+- [ ] **Enter Mode:** Long-press changes UI to selection mode.
+- [ ] **Select:** Tapping items toggles selection.
+- [ ] **Bulk Remove:** Tapping Trash removes all selected items.
+- [ ] **Bulk Undo:** Undo restores all removed items.
+
+---
+
+###  Test Coverage
+
+- [ ] **Unit:** RemoveItems handles list of IDs correctly.
+- [ ] **Widget:** Long-press -> Select 2 items -> Remove -> Verify both gone.
+
+---
+
+##  Feature: Undo, Feedback & Accessibility
+
+###  Overview
+**Purpose:** Ensure the app is safe to use (undo) and accessible to all users (screen readers, touch targets).
+**Goal:** Compliance with accessibility standards and good UX practices.
+
+###  Definitions & Assumptions
+*   **Touch Target:** Minimum 44x44dp.
+*   **Semantics:** All icon-only buttons must have labels.
+
+---
+
+###  Implementation Tasks
+
+- [ ] **Undo:** Ensure all destructive actions have an Undo path.
+- [ ] **Feedback:** Use Snackbars/Toasts for confirmation.
+- [ ] **A11y Labels:** Add semanticLabel to IconButtons.
+- [ ] **Focus Order:** Ensure logical traversal for keyboard/screen readers.
+
+---
+
+###  User Stories
+
+*   **US-18:** As a user with low vision, I want my screen reader to tell me what the "Trash" icon does.
+*   **US-19:** As a user with motor impairments, I need buttons to be large enough to tap easily.
+*   **US-20:** As a user, I want confirmation when I perform a major action.
+
+---
+
+###  Detailed Requirements
+
+#### Accessibility (A11y)
+*   **Labels:**
+    *   + -> "Increment quantity for [Sandwich Name]"
+    *   ` -> "Decrement quantity for [Sandwich Name]"
+    *   Trash -> "Remove [Sandwich Name] from cart"
+*   **Sizing:** Ensure IconButton or custom widgets have min 44dp hit area.
+
+#### Feedback
+*   **Snackbars:** "Item removed", "Quantity updated" (optional for screen readers).
+*   **Haptics:** (Optional) Light vibration on quantity change.
+
+---
+
+###  Acceptance Criteria
+
+- [ ] **Semantics:** Screen reader announces button functions clearly.
+- [ ] **Hit Test:** Buttons are easy to tap (no mis-taps).
+- [ ] **Undo Consistency:** Undo is available for single and bulk removals.
+
+---
+
+###  Test Coverage
+
+- [ ] **A11y Test:** Verify semantic nodes in widget tree.
+- [ ] **Manual:** Test with TalkBack/VoiceOver (if possible) or SemanticsDebugger.
