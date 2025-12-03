@@ -87,4 +87,24 @@ void main() {
 
     expect(find.text('Passwords do not match'), findsOneWidget);
   });
+
+  testWidgets('Successful submission shows loading indicator', (WidgetTester tester) async {
+    await tester.pumpWidget(createWidgetUnderTest());
+
+    // Enter valid credentials
+    await tester.enterText(find.widgetWithText(TextFormField, 'Email'), 'test@example.com');
+    await tester.enterText(find.widgetWithText(TextFormField, 'Password'), 'password123');
+
+    // Tap Sign In
+    await tester.tap(find.widgetWithText(ElevatedButton, 'Sign In'));
+    await tester.pump(); // Start animation
+
+    // Check for loading indicator
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    expect(find.text('Sign In'), findsOneWidget); // The text in AppBar is still there
+
+    // Wait for the simulated delay (1 second)
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpAndSettle(); // Finish navigation animation
+  });
 }
