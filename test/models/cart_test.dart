@@ -117,5 +117,29 @@ void main() {
       expect(cart.getQuantity(sandwichA), 0);
       expect(cart.isEmpty, isTrue);
     });
+
+    test('updateItemQuantity should update quantity', () {
+      cart.add(sandwichA, quantity: 1);
+      cart.updateItemQuantity(sandwichA, 5);
+      expect(cart.getQuantity(sandwichA), 5);
+    });
+
+    test('updateItemQuantity should remove item if quantity is 0', () {
+      cart.add(sandwichA, quantity: 5);
+      cart.updateItemQuantity(sandwichA, 0);
+      expect(cart.items.containsKey(sandwichA), isFalse);
+    });
+
+    test('updateItemQuantity should remove item if quantity is negative', () {
+      cart.add(sandwichA, quantity: 5);
+      cart.updateItemQuantity(sandwichA, -1);
+      expect(cart.items.containsKey(sandwichA), isFalse);
+    });
+
+    test('removeItem should remove the item completely', () {
+      cart.add(sandwichA, quantity: 5);
+      cart.removeItem(sandwichA);
+      expect(cart.items.containsKey(sandwichA), isFalse);
+    });
   });
 }
