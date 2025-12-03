@@ -156,3 +156,74 @@
 - [ ] **Widget:** Enter '5' -> Confirm -> Quantity becomes 5.
 - [ ] **Widget:** Enter '0' -> Confirm -> Removal dialog appears.
 
+
+##  Feature: Remove Item (Delete / Swipe-to-Delete)
+
+###  Overview
+**Purpose:** Allow users to remove an item via a trash icon or swipe-to-delete on the cart item row.
+**Goal:** Provide a quick way to remove items with safety mechanisms (Undo).
+
+###  Definitions & Assumptions
+*   **Optimistic Removal:** Item disappears immediately.
+*   **Undo Window:** 5-8 seconds via Snackbar.
+*   **Bulk Clear:** Requires confirmation modal.
+
+---
+
+###  Implementation Tasks
+
+- [ ] **UI Interaction:** Add Trash icon button and/or Swipe-to-Dismiss widget.
+- [ ] **Model Update:** Implement Cart.removeItem(int itemId) and Cart.restoreRemovedItem.
+- [ ] **Feedback:** Show Snackbar with "Undo" action upon removal.
+- [ ] **State Management:** Ensure total price updates immediately.
+- [ ] **Testing:** Widget tests for remove and undo flows.
+
+---
+
+###  User Stories
+
+*   **US-10:** As a shopper, I want to easily remove an item I no longer want.
+*   **US-11:** As a shopper, if I delete an item by mistake, I want to undo it quickly.
+*   **US-12:** As a shopper, I want to see the total price drop immediately when I remove an item.
+
+---
+
+###  Detailed Requirements
+
+#### UI Controls
+*   **Trash Icon:** Explicit button on the row.
+*   **Swipe:** (Optional) Standard swipe-to-delete gesture.
+*   **Snackbar:** "Item removed" message with "Undo" button.
+
+#### Data / Model
+*   Cart.removeItem(itemId):
+    *   Remove from list.
+    *   Store copy for Undo.
+    *   Recalculate total.
+    *   Notify listeners.
+*   Cart.restoreRemovedItem(item):
+    *   Add item back at previous index (or end).
+    *   Recalculate total.
+
+#### Edge Cases
+*   **Rapid Delete:** Deleting multiple items quickly -> Queue snackbars or handle multiple undos (simplify to last item if needed).
+*   **Empty Cart:** Removing last item shows empty state.
+
+---
+
+###  Acceptance Criteria
+
+- [ ] **Remove:** Tapping trash/swiping removes item from view immediately.
+- [ ] **Total Update:** Cart total updates instantly.
+- [ ] **Undo:** Tapping "Undo" on Snackbar restores the item and total.
+- [ ] **Persistence:** Removal is saved to backend/storage.
+- [ ] **Clear All:** (If implemented) "Clear Cart" asks for confirmation first.
+
+---
+
+###  Test Coverage
+
+- [ ] **Unit:** emoveItem decreases list size and total price.
+- [ ] **Unit:** estoreRemovedItem restores list size and total price.
+- [ ] **Widget:** Tap Trash -> Item gone -> Snackbar visible.
+- [ ] **Widget:** Tap Undo -> Item reappears.
