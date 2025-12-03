@@ -223,7 +223,79 @@
 
 ###  Test Coverage
 
-- [ ] **Unit:** emoveItem decreases list size and total price.
-- [ ] **Unit:** estoreRemovedItem restores list size and total price.
+- [ ] **Unit:** RemoveItem decreases list size and total price.
+- [ ] **Unit:** RestoreRemovedItem restores list size and total price.
 - [ ] **Widget:** Tap Trash -> Item gone -> Snackbar visible.
 - [ ] **Widget:** Tap Undo -> Item reappears.
+
+##  Feature: Edit Item Options (Size / Bread / Type)
+
+###  Overview
+**Purpose:** Allow users to modify the properties (size, bread, type) of a sandwich already in the cart.
+**Goal:** Enable corrections or changes without removing and re-adding items.
+
+###  Definitions & Assumptions
+*   **Mutable Fields:** Size, Bread, Type.
+*   **Pricing Impact:** Only Size affects unit price.
+*   **Merge Logic:** If editing makes an item identical to another, prompt to merge or keep separate.
+
+---
+
+###  Implementation Tasks
+
+- [ ] **UI Interaction:** Add "Edit" button to cart row.
+- [ ] **Edit Sheet:** Create a modal/screen pre-filled with current item values.
+- [ ] **Model Update:** Implement Cart.replaceItem(itemId, updatedSandwich).
+- [ ] **Pricing:** Ensure price recalculates if size changes.
+- [ ] **Testing:** Unit tests for replacement and pricing; Widget tests for edit flow.
+
+---
+
+###  User Stories
+
+*   **US-13:** As a shopper, I want to change the size of a sandwich in my cart.
+*   **US-14:** As a shopper, I want to switch the bread type without starting over.
+*   **US-15:** As a shopper, I expect the price to update if I change the size.
+
+---
+
+###  Detailed Requirements
+
+#### UI Controls
+*   **Edit Button:** Text or Icon button on the cart item.
+*   **Edit Screen/Sheet:**
+    *   Dropdowns/Selectors for Size, Bread, Type.
+    *   "Cancel" and "Save Changes" buttons.
+    *   Pre-selected values match the item being edited.
+
+#### Data / Model
+*   Cart.replaceItem(itemId, updatedSandwich):
+    *   Find item by ID.
+    *   Update the Sandwich object.
+    *   Recalculate unit price: PricingRepository.priceForSize(updatedSandwich.size).
+    *   Recalculate subtotal (unitPrice * quantity) and cart total.
+    *   Notify listeners.
+
+#### Edge Cases
+*   **Merge Conflict:** If the updated item matches another existing item -> Prompt user: "Merge with existing item?"
+    *   **Yes:** Add quantities, remove old item.
+    *   **No:** Keep as separate line item.
+*   **No Changes:** Saving without changes closes the sheet with no action.
+
+---
+
+###  Acceptance Criteria
+
+- [ ] **Open Edit:** Tapping Edit opens a form with correct current values.
+- [ ] **Save Changes:** Confirming updates the item details in the list.
+- [ ] **Price Update:** Changing size updates the item price and cart total.
+- [ ] **Non-Price Update:** Changing bread/type updates description but NOT price.
+- [ ] **Cancel:** Canceling discards changes.
+
+---
+
+###  Test Coverage
+
+- [ ] **Unit:** ReplaceItem updates sandwich details correctly.
+- [ ] **Unit:** Changing size triggers price recalculation.
+- [ ] **Widget:** Edit flow -> Open sheet -> Change value -> Save -> Verify UI update.
