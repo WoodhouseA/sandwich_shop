@@ -15,14 +15,14 @@
 
 ###  Implementation Tasks
 
-- [ ] **UI Layout:** Design cart rows with ` [qty] + controls (min 44x44dp).
-- [ ] **Model Update:** Implement Cart.updateItemQuantity(String itemId, int newQuantity).
-- [ ] **Wiring:** Connect UI buttons to updateItemQuantity with optimistic updates.
-- [ ] **UX - Decrement:** Handle decrement from 1 (Confirmation vs Immediate Remove).
-- [ ] **UX - Feedback:** Add ripple effects/animations and disable + at max limit.
-- [ ] **Error Handling:** Implement revert logic for persistence failures.
-- [ ] **Testing:** Write unit tests for Cart and widget tests for interactions.
-- [ ] **Accessibility:** Ensure screen reader support for buttons.
+- [x] **UI Layout:** Design cart rows with ` [qty] + controls (min 44x44dp).
+- [x] **Model Update:** Implement Cart.updateItemQuantity(String itemId, int newQuantity).
+- [x] **Wiring:** Connect UI buttons to updateItemQuantity with optimistic updates.
+- [x] **UX - Decrement:** Handle decrement from 1 (Confirmation vs Immediate Remove).
+- [x] **UX - Feedback:** Add ripple effects/animations and disable + at max limit.
+- [x] **Error Handling:** Implement revert logic for persistence failures.
+- [x] **Testing:** Write unit tests for Cart and widget tests for interactions.
+- [x] **Accessibility:** Ensure screen reader support for buttons.
 
 ---
 
@@ -60,32 +60,32 @@
 
 ###  Acceptance Criteria
 
-- [ ] **Increment:** Tapping + increases quantity by 1 and updates totals immediately.
-- [ ] **Decrement:** Tapping ` decreases quantity by 1 and updates totals immediately.
-- [ ] **Remove Flow:** Tapping ` at quantity 1 triggers removal flow (Confirm or Undo).
-- [ ] **Max Limit:** + is disabled at quantity 99.
-- [ ] **Error Revert:** UI reverts to previous value if backend update fails.
-- [ ] **Undo:** Removing an item shows a Snackbar with Undo option that works.
-- [ ] **A11y:** Buttons have semantic labels ("Increment quantity").
-- [ ] **Perf:** Updates happen within 100ms.
+- [x] **Increment:** Tapping + increases quantity by 1 and updates totals immediately.
+- [x] **Decrement:** Tapping ` decreases quantity by 1 and updates totals immediately.
+- [x] **Remove Flow:** Tapping ` at quantity 1 triggers removal flow (Confirm or Undo).
+- [x] **Max Limit:** + is disabled at quantity 99.
+- [x] **Error Revert:** UI reverts to previous value if backend update fails.
+- [x] **Undo:** Removing an item shows a Snackbar with Undo option that works.
+- [x] **A11y:** Buttons have semantic labels ("Increment quantity").
+- [x] **Perf:** Updates happen within 100ms.
 
 ---
 
 ###  Test Coverage
 
-- [ ] **Unit:** Cart.updateItemQuantity calculates totals correctly.
-- [ ] **Unit:** Cart.removeItem and RestoreRemovedItem manage list state.
-- [ ] **Widget:** Tap + updates text and total.
-- [ ] **Widget:** Tap ` at 1 triggers removal dialog/action.
-- [ ] **Widget:** Undo restores the item.
+- [x] **Unit:** Cart.updateItemQuantity calculates totals correctly.
+- [x] **Unit:** Cart.removeItem and RestoreRemovedItem manage list state.
+- [x] **Widget:** Tap + updates text and total.
+- [x] **Widget:** Tap ` at 1 triggers removal dialog/action.
+- [x] **Widget:** Undo restores the item.
 
 ---
 
 ###  Deliverables
 
-- [ ] Updated Cart model.
-- [ ] Updated Cart UI.
-- [ ] Test suite (Unit + Widget).
+- [x] Updated Cart model.
+- [x] Updated Cart UI.
+- [x] Test suite (Unit + Widget).
 - [ ] Documentation/README update.
 
 
@@ -104,10 +104,10 @@
 
 ###  Implementation Tasks
 
-- [ ] **UI Interaction:** Make quantity text tappable to open input dialog/sheet.
-- [ ] **Input Logic:** Restrict input to digits only.
-- [ ] **Validation:** Handle 0 (remove), >99 (cap), and invalid text.
-- [ ] **Model Update:** Reuse Cart.updateItemQuantity.
+- [x] **UI Interaction:** Make quantity text tappable to open input dialog/sheet.
+- [x] **Input Logic:** Restrict input to digits only.
+- [x] **Validation:** Handle 0 (remove), >99 (cap), and invalid text.
+- [x] **Model Update:** Reuse Cart.updateItemQuantity.
 - [ ] **Testing:** Widget tests for dialog interaction and validation.
 
 ---
@@ -142,11 +142,11 @@
 
 ###  Acceptance Criteria
 
-- [ ] **Open Input:** Tapping quantity opens an input method.
-- [ ] **Valid Update:** Entering a valid number (e.g., 5) and confirming updates the cart immediately.
-- [ ] **Zero Handling:** Entering 0 prompts for removal.
-- [ ] **Max Cap:** Entering 100+ either caps at 99 or shows an error.
-- [ ] **Cancel:** Canceling the dialog leaves the quantity unchanged.
+- [x] **Open Input:** Tapping quantity opens an input method.
+- [x] **Valid Update:** Entering a valid number (e.g., 5) and confirming updates the cart immediately.
+- [x] **Zero Handling:** Entering 0 prompts for removal.
+- [x] **Max Cap:** Entering 100+ either caps at 99 or shows an error.
+- [x] **Cancel:** Canceling the dialog leaves the quantity unchanged.
 
 ---
 
@@ -172,11 +172,11 @@
 
 ###  Implementation Tasks
 
-- [ ] **UI Interaction:** Add Trash icon button and/or Swipe-to-Dismiss widget.
-- [ ] **Model Update:** Implement Cart.removeItem(int itemId) and Cart.restoreRemovedItem.
-- [ ] **Feedback:** Show Snackbar with "Undo" action upon removal.
-- [ ] **State Management:** Ensure total price updates immediately.
-- [ ] **Testing:** Widget tests for remove and undo flows.
+- [x] **UI Interaction:** Add Trash icon button and/or Swipe-to-Dismiss widget.
+- [x] **Model Update:** Implement Cart.removeItem(int itemId) and Cart.restoreRemovedItem.
+- [x] **Feedback:** Show Snackbar with "Undo" action upon removal.
+- [x] **State Management:** Ensure total price updates immediately.
+- [x] **Testing:** Widget tests for remove and undo flows.
 
 ---
 
@@ -213,20 +213,20 @@
 
 ###  Acceptance Criteria
 
-- [ ] **Remove:** Tapping trash/swiping removes item from view immediately.
-- [ ] **Total Update:** Cart total updates instantly.
-- [ ] **Undo:** Tapping "Undo" on Snackbar restores the item and total.
-- [ ] **Persistence:** Removal is saved to backend/storage.
+- [x] **Remove:** Tapping trash/swiping removes item from view immediately.
+- [x] **Total Update:** Cart total updates instantly.
+- [x] **Undo:** Tapping "Undo" on Snackbar restores the item and total.
+- [x] **Persistence:** Removal is saved to backend/storage.
 - [ ] **Clear All:** (If implemented) "Clear Cart" asks for confirmation first.
 
 ---
 
 ###  Test Coverage
 
-- [ ] **Unit:** RemoveItem decreases list size and total price.
-- [ ] **Unit:** RestoreRemovedItem restores list size and total price.
-- [ ] **Widget:** Tap Trash -> Item gone -> Snackbar visible.
-- [ ] **Widget:** Tap Undo -> Item reappears.
+- [x] **Unit:** RemoveItem decreases list size and total price.
+- [x] **Unit:** RestoreRemovedItem restores list size and total price.
+- [x] **Widget:** Tap Trash -> Item gone -> Snackbar visible.
+- [x] **Widget:** Tap Undo -> Item reappears.
 
 ##  Feature: Edit Item Options (Size / Bread / Type)
 
@@ -243,11 +243,11 @@
 
 ###  Implementation Tasks
 
-- [ ] **UI Interaction:** Add "Edit" button to cart row.
-- [ ] **Edit Sheet:** Create a modal/screen pre-filled with current item values.
-- [ ] **Model Update:** Implement Cart.replaceItem(itemId, updatedSandwich).
-- [ ] **Pricing:** Ensure price recalculates if size changes.
-- [ ] **Testing:** Unit tests for replacement and pricing; Widget tests for edit flow.
+- [x] **UI Interaction:** Add "Edit" button to cart row.
+- [x] **Edit Sheet:** Create a modal/screen pre-filled with current item values.
+- [x] **Model Update:** Implement Cart.replaceItem(itemId, updatedSandwich).
+- [x] **Pricing:** Ensure price recalculates if size changes.
+- [x] **Testing:** Unit tests for replacement and pricing; Widget tests for edit flow.
 
 ---
 
@@ -286,19 +286,19 @@
 
 ###  Acceptance Criteria
 
-- [ ] **Open Edit:** Tapping Edit opens a form with correct current values.
-- [ ] **Save Changes:** Confirming updates the item details in the list.
-- [ ] **Price Update:** Changing size updates the item price and cart total.
-- [ ] **Non-Price Update:** Changing bread/type updates description but NOT price.
-- [ ] **Cancel:** Canceling discards changes.
+- [x] **Open Edit:** Tapping Edit opens a form with correct current values.
+- [x] **Save Changes:** Confirming updates the item details in the list.
+- [x] **Price Update:** Changing size updates the item price and cart total.
+- [x] **Non-Price Update:** Changing bread/type updates description but NOT price.
+- [x] **Cancel:** Canceling discards changes.
 
 ---
 
 ###  Test Coverage
 
-- [ ] **Unit:** ReplaceItem updates sandwich details correctly.
-- [ ] **Unit:** Changing size triggers price recalculation.
-- [ ] **Widget:** Edit flow -> Open sheet -> Change value -> Save -> Verify UI update.
+- [x] **Unit:** ReplaceItem updates sandwich details correctly.
+- [x] **Unit:** Changing size triggers price recalculation.
+- [x] **Widget:** Edit flow -> Open sheet -> Change value -> Save -> Verify UI update.
 
 ##  Feature: Batch / Multi-Select Actions (Optional)
 
