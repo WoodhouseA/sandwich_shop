@@ -87,3 +87,72 @@
 - [ ] Updated Cart UI.
 - [ ] Test suite (Unit + Widget).
 - [ ] Documentation/README update.
+
+
+##  Feature: Set Quantity Directly (Edit Quantity)
+
+###  Overview
+**Purpose:** Allow users to tap the quantity number to open a modal or inline input for typing a specific quantity.
+**Goal:** Enable quick entry for large quantity changes and precise control.
+
+###  Definitions & Assumptions
+*   **Input:** Numeric keyboard, positive integers only.
+*   **Validation:** 1 to MAX_QUANTITY (99).
+*   **Zero Input:** Treated as a removal request.
+
+---
+
+###  Implementation Tasks
+
+- [ ] **UI Interaction:** Make quantity text tappable to open input dialog/sheet.
+- [ ] **Input Logic:** Restrict input to digits only.
+- [ ] **Validation:** Handle 0 (remove), >99 (cap), and invalid text.
+- [ ] **Model Update:** Reuse Cart.updateItemQuantity.
+- [ ] **Testing:** Widget tests for dialog interaction and validation.
+
+---
+
+###  User Stories
+
+*   **US-7:** As a shopper, I want to type a quantity directly so I don't have to tap + many times.
+*   **US-8:** As a shopper, I want to be prevented from entering invalid numbers (negative, non-numeric).
+*   **US-9:** As a shopper, if I enter 0, I want to be asked if I want to remove the item.
+
+---
+
+###  Detailed Requirements
+
+#### UI Controls
+*   Tapping the quantity number opens a dialog/bottom sheet.
+*   Numeric keyboard is shown by default.
+*   "Cancel" and "Confirm" actions.
+
+#### Data / Model
+*   Reuse Cart.updateItemQuantity(itemId, newQuantity).
+*   **Validation:**
+    *   If input is not a number -> Show error / keep focus.
+    *   If input > MAX_QUANTITY -> Cap at max or show error.
+    *   If input == 0 -> Trigger removal flow (confirm dialog).
+
+#### Edge Cases
+*   **Empty Input:** Treat as "Cancel" or show validation error.
+*   **Paste:** Prevent pasting non-numeric text.
+
+---
+
+###  Acceptance Criteria
+
+- [ ] **Open Input:** Tapping quantity opens an input method.
+- [ ] **Valid Update:** Entering a valid number (e.g., 5) and confirming updates the cart immediately.
+- [ ] **Zero Handling:** Entering 0 prompts for removal.
+- [ ] **Max Cap:** Entering 100+ either caps at 99 or shows an error.
+- [ ] **Cancel:** Canceling the dialog leaves the quantity unchanged.
+
+---
+
+###  Test Coverage
+
+- [ ] **Widget:** Tap quantity -> Dialog appears.
+- [ ] **Widget:** Enter '5' -> Confirm -> Quantity becomes 5.
+- [ ] **Widget:** Enter '0' -> Confirm -> Removal dialog appears.
+
