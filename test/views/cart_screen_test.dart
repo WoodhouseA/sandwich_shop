@@ -199,5 +199,58 @@ void main() {
       expect(find.text('Remove Item?'), findsOneWidget);
       expect(find.text('Remove'), findsOneWidget);
     });
+
+    testWidgets('delete button removes item and shows undo snackbar', (WidgetTester tester) async {
+      final Cart cart = Cart();
+      final Sandwich sandwich = Sandwich(
+        type: SandwichType.veggieDelight,
+        isFootlong: false,
+        breadType: BreadType.white,
+      );
+      cart.add(sandwich, quantity: 1);
+
+      await tester.pumpWidget(MaterialApp(home: CartScreen(cart: cart)));
+
+      // Tap delete icon
+      await tester.tap(find.byIcon(Icons.delete));
+      await tester.pump();
+
+      // Confirm dialog
+      expect(find.text('Remove Item?'), findsOneWidget);
+      await tester.tap(find.text('Remove'));
+      await tester.pumpAndSettle(); // Wait for dialog to close and snackbar to appear
+
+      expect(cart.isEmpty, isTrue);
+      expect(find.text('Veggie Delight removed'), findsOneWidget);
+      expect(find.text('Undo'), findsOneWidget);
+    });
+
+    testWidgets('undo action restores item', (WidgetTester tester) async {
+      final Cart cart = Cart();
+      final Sandwich sandwich = Sandwich(
+        type: SandwichType.veggieDelight,
+        isFootlong: false,
+        breadType: BreadType.white,
+      );
+      cart.add(sandwich, quantity: 1);
+
+      await tester.pumpWidget(MaterialApp(home: CartScreen(cart: cart)));
+
+      // Remove item
+      await tester.tap(find.byIcon(Icons.delete));
+      await tester.pump();
+      await tester.tap(find.text('Remove'));
+      await tester.pumpAndSettle();
+
+      expect(cart.isEmpty, isTrue);
+
+      // Tap Undo
+      await tester.tap(find.text('Undo'));
+      await tester.pump();
+
+      expect(cart.isEmpty, isFalse);
+      expect(cart.getQuantity(sandwich), 1);
+      expect(find.text('Veggie Delight'), findsOneWidget);
+    });
   });
 }
