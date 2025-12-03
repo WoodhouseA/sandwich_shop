@@ -493,3 +493,49 @@
 - [ ] **Unit:** Validation logic correctly identifies valid/invalid inputs.
 - [ ] **Widget:** Switching modes shows/hides Confirm Password field.
 - [ ] **Widget:** Tapping button triggers loading state.
+
+##  Feature: Navigation & Responsive Design
+
+###  Overview
+**Purpose:** Provide consistent and accessible navigation across all screens, adapting to different screen sizes.
+**Goal:** Implement a Navigation Drawer for mobile and a permanent sidebar/rail for larger screens.
+
+###  Definitions & Assumptions
+*   **Mobile Breakpoint:** < 600 logical pixels.
+*   **Desktop/Tablet:** >= 600 logical pixels.
+*   **Destinations:** Order (Home), Cart, About, Sign In/Up.
+
+---
+
+###  Implementation Tasks
+
+- [ ] **Component:** Create a reusable `AppDrawer` widget with navigation links.
+- [ ] **Responsive Layout:** Create a `ResponsiveScaffold` widget that switches between a modal Drawer (mobile) and permanent Sidebar (desktop).
+- [ ] **Integration:** Refactor existing screens (`OrderScreen`, `CartScreen`, `AboutScreen`, `AuthScreen`) to use `ResponsiveScaffold`.
+- [ ] **State:** Ensure the active route is highlighted in the navigation.
+- [ ] **Testing:** Widget tests for drawer opening, navigation, and responsive layout changes.
+
+---
+
+###  User Stories
+
+*   **US-25:** As a user, I want to access the menu from any screen.
+*   **US-26:** As a user on a phone, I want a slide-out drawer to save screen space.
+*   **US-27:** As a user on a tablet/desktop, I want the menu always visible for faster navigation.
+
+---
+
+###  Acceptance Criteria
+
+- [ ] **Drawer:** Hamburger menu appears on mobile; tapping it opens the drawer.
+- [ ] **Sidebar:** Menu is permanently visible on screens wider than 600px.
+- [ ] **Navigation:** Tapping a link navigates to the correct screen.
+- [ ] **Highlight:** The current screen is visually highlighted in the menu.
+
+---
+
+###  Test Coverage
+
+- [ ] **Widget:** Verify Drawer opens on mobile.
+- [ ] **Widget:** Verify Sidebar exists on desktop.
+- [ ] **Widget:** Verify navigation links work.
