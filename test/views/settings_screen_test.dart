@@ -44,5 +44,36 @@ void main() {
       
       expect(AppStyles.baseFontSize, isNot(16.0));
     });
+
+    testWidgets('back button pops the screen', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Builder(
+            builder: (context) => Scaffold(
+              body: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const SettingsScreen()),
+                  );
+                },
+                child: const Text('Go to Settings'),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      await tester.tap(find.text('Go to Settings'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(SettingsScreen), findsOneWidget);
+
+      await tester.tap(find.text('Back to Order'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(SettingsScreen), findsNothing);
+      expect(find.text('Go to Settings'), findsOneWidget);
+    });
   });
 }
