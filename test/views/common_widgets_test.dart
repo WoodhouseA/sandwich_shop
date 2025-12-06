@@ -28,4 +28,24 @@ void main() {
       expect(pressed, isTrue);
     });
   });
+
+  group('CartBadge', () {
+    testWidgets('displays correct item count', (WidgetTester tester) async {
+      final Cart cart = Cart();
+      
+      await tester.pumpWidget(
+        ChangeNotifierProvider<Cart>.value(
+          value: cart,
+          child: const MaterialApp(
+            home: Scaffold(
+              body: CartBadge(),
+            ),
+          ),
+        ),
+      );
+
+      expect(find.byIcon(Icons.shopping_cart), findsOneWidget);
+      expect(find.text('0'), findsOneWidget);
+    });
+  });
 }
