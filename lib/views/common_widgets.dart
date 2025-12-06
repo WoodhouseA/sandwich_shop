@@ -39,3 +39,26 @@ class StyledButton extends StatelessWidget {
     );
   }
 }
+
+class CartBadge extends StatelessWidget {
+  const CartBadge({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<Cart>(
+      builder: (context, cart, child) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.shopping_cart),
+              const SizedBox(width: 4),
+              Text('${cart.countOfItems}'),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
