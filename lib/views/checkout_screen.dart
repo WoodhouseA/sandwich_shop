@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sandwich_shop/views/app_styles.dart';
-import 'package:sandwich_shop/models/cart.dart';
-import 'package:sandwich_shop/models/sandwich.dart';
-import 'package:sandwich_shop/repositories/pricing_repository.dart';
+import 'app_styles.dart';
+import '../models/cart.dart';
+import '../models/sandwich.dart';
+import '../repositories/pricing_repository.dart';
 
 class CheckoutScreen extends StatefulWidget {
   final Cart cart;

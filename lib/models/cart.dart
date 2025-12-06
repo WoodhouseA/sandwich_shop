@@ -1,8 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'sandwich.dart';
-import 'package:sandwich_shop/repositories/pricing_repository.dart';
+import '../repositories/pricing_repository.dart';
 
-class Cart extends ChangeNotifier {
+class Cart {
   final Map<Sandwich, int> _items = {};
 
   // Returns a read-only copy of the items and their quantities
@@ -14,7 +13,6 @@ class Cart extends ChangeNotifier {
     } else {
       _items[sandwich] = quantity;
     }
-    notifyListeners();
   }
 
   void remove(Sandwich sandwich, {int quantity = 1}) {
@@ -25,48 +23,11 @@ class Cart extends ChangeNotifier {
       } else {
         _items.remove(sandwich);
       }
-      notifyListeners();
     }
   }
 
   void clear() {
     _items.clear();
-    notifyListeners();
-  }
-
-  void updateItemQuantity(Sandwich sandwich, int newQuantity) {
-    if (newQuantity <= 0) {
-      removeItem(sandwich);
-    } else {
-      _items[sandwich] = newQuantity;
-      notifyListeners();
-    }
-  }
-
-  void removeItem(Sandwich sandwich) {
-    if (_items.containsKey(sandwich)) {
-      _items.remove(sandwich);
-      notifyListeners();
-    }
-  }
-
-  void replaceItem(Sandwich oldSandwich, Sandwich newSandwich) {
-    if (_items.containsKey(oldSandwich)) {
-      final int quantity = _items[oldSandwich]!;
-      _items.remove(oldSandwich);
-      
-      // If the new sandwich already exists, merge quantities
-      if (_items.containsKey(newSandwich)) {
-        _items[newSandwich] = _items[newSandwich]! + quantity;
-      } else {
-        _items[newSandwich] = quantity;
-      }
-      notifyListeners();
-    }
-  }
-
-  void restoreRemovedItem(Sandwich sandwich, int quantity) {
-    add(sandwich, quantity: quantity);
   }
 
   double get totalPrice {

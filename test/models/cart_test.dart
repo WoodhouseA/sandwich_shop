@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sandwich_shop/models/cart.dart';
-import 'package:sandwich_shop/models/sandwich.dart';
+import '../../lib/models/cart.dart';
+import '../../lib/models/sandwich.dart';
 
 void main() {
   group('Cart', () {
@@ -116,58 +116,6 @@ void main() {
       cart.remove(sandwichA, quantity: 5);
       expect(cart.getQuantity(sandwichA), 0);
       expect(cart.isEmpty, isTrue);
-    });
-
-    test('updateItemQuantity should update quantity', () {
-      cart.add(sandwichA, quantity: 1);
-      cart.updateItemQuantity(sandwichA, 5);
-      expect(cart.getQuantity(sandwichA), 5);
-    });
-
-    test('updateItemQuantity should remove item if quantity is 0', () {
-      cart.add(sandwichA, quantity: 5);
-      cart.updateItemQuantity(sandwichA, 0);
-      expect(cart.items.containsKey(sandwichA), isFalse);
-    });
-
-    test('updateItemQuantity should remove item if quantity is negative', () {
-      cart.add(sandwichA, quantity: 5);
-      cart.updateItemQuantity(sandwichA, -1);
-      expect(cart.items.containsKey(sandwichA), isFalse);
-    });
-
-    test('removeItem should remove the item completely', () {
-      cart.add(sandwichA, quantity: 5);
-      cart.removeItem(sandwichA);
-      expect(cart.items.containsKey(sandwichA), isFalse);
-    });
-
-    test('replaceItem should replace old item with new item and preserve quantity', () {
-      cart.add(sandwichA, quantity: 3);
-      cart.replaceItem(sandwichA, sandwichB);
-      
-      expect(cart.items.containsKey(sandwichA), isFalse);
-      expect(cart.items.containsKey(sandwichB), isTrue);
-      expect(cart.getQuantity(sandwichB), 3);
-    });
-
-    test('replaceItem should merge quantities if new item already exists', () {
-      cart.add(sandwichA, quantity: 2);
-      cart.add(sandwichB, quantity: 3);
-      
-      cart.replaceItem(sandwichA, sandwichB);
-      
-      expect(cart.items.containsKey(sandwichA), isFalse);
-      expect(cart.getQuantity(sandwichB), 5); // 3 existing + 2 from sandwichA
-    });
-
-    test('restoreRemovedItem should add item back with specified quantity', () {
-      cart.restoreRemovedItem(sandwichA, 3);
-      expect(cart.getQuantity(sandwichA), 3);
-      
-      // Should add to existing if present
-      cart.restoreRemovedItem(sandwichA, 2);
-      expect(cart.getQuantity(sandwichA), 5);
     });
   });
 }

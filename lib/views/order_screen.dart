@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:sandwich_shop/views/app_styles.dart';
-import 'package:sandwich_shop/models/cart.dart';
-import 'package:sandwich_shop/models/sandwich.dart';
-import 'package:sandwich_shop/views/widgets/responsive_scaffold.dart';
+import 'app_styles.dart';
+import 'cart_screen.dart';
+import '../models/cart.dart';
+import '../models/sandwich.dart';
+import 'profile_screen.dart';
 
 class OrderScreen extends StatefulWidget {
   final int maxQuantity;
-  final Cart cart;
 
-  const OrderScreen({super.key, this.maxQuantity = 10, required this.cart});
+  const OrderScreen({super.key, this.maxQuantity = 10});
 
   @override
   State<OrderScreen> createState() {
@@ -17,7 +17,7 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
-  late final Cart _cart;
+  final Cart _cart = Cart();
   final TextEditingController _notesController = TextEditingController();
 
   SandwichType _selectedSandwichType = SandwichType.veggieDelight;
@@ -28,7 +28,6 @@ class _OrderScreenState extends State<OrderScreen> {
   @override
   void initState() {
     super.initState();
-    _cart = widget.cart;
     _notesController.addListener(() {
       setState(() {});
     });
@@ -38,6 +37,36 @@ class _OrderScreenState extends State<OrderScreen> {
   void dispose() {
     _notesController.dispose();
     super.dispose();
+  }
+
+  Future<void> _navigateToProfile() async {
+    final Map<String, String>? result =
+        await Navigator.push<Map<String, String>>(
+      context,
+      MaterialPageRoute<Map<String, String>>(
+        builder: (BuildContext context) => const ProfileScreen(),
+      ),
+    );
+
+    final bool hasResult = result != null;
+    final bool widgetStillMounted = mounted;
+
+    if (hasResult && widgetStillMounted) {
+      _showWelcomeMessage(result);
+    }
+  }
+
+  void _showWelcomeMessage(Map<String, String> profileData) {
+    final String name = profileData['name']!;
+    final String location = profileData['location']!;
+    final String welcomeMessage = 'Welcome, $name! Ordering from $location';
+
+    final SnackBar welcomeSnackBar = SnackBar(
+      content: Text(welcomeMessage),
+      duration: const Duration(seconds: 3),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(welcomeSnackBar);
   }
 
   void _addToCart() {
@@ -78,7 +107,12 @@ class _OrderScreenState extends State<OrderScreen> {
   }
 
   void _navigateToCartView() {
-    Navigator.pushNamed(context, '/cart');
+    Navigator.push(
+      context,
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) => CartScreen(cart: _cart),
+      ),
+    );
   }
 
   List<DropdownMenuEntry<SandwichType>> _buildSandwichTypeEntries() {
@@ -118,20 +152,19 @@ class _OrderScreenState extends State<OrderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveScaffold(
-      currentRoute: '/order',
-      title: Row(
-        children: [
-          SizedBox(
-            height: 40,
+    return Scaffold(
+      appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SizedBox(
+            height: 100,
             child: Image.asset('assets/images/logo.png'),
           ),
-          const SizedBox(width: 8),
-          const Text(
-            'Sandwich Counter',
-            style: heading1,
-          ),
-        ],
+        ),
+        title: const Text(
+          'Sandwich Counter',
+          style: heading1,
+        ),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -224,17 +257,17 @@ class _OrderScreenState extends State<OrderScreen> {
                 backgroundColor: Colors.blue,
               ),
               const SizedBox(height: 20),
+              StyledButton(
+                onPressed: _navigateToProfile,
+                icon: Icons.person,
+                label: 'Profile',
+                backgroundColor: Colors.purple,
+              ),
+              const SizedBox(height: 20),
               Text(
                 'Cart: ${_cart.countOfItems} items - £${_cart.totalPrice.toStringAsFixed(2)}',
                 style: normalText,
                 textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 20),
-              TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/auth');
-                },
-                child: const Text('Sign In / Sign Up'),
               ),
               const SizedBox(height: 20),
             ],
