@@ -22,6 +22,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
     await Future.delayed(const Duration(seconds: 2));
 
+    if (!mounted) return;
+
     final DateTime currentTime = DateTime.now();
     final int timestamp = currentTime.millisecondsSinceEpoch;
     final String orderId = 'ORD$timestamp';
