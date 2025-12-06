@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import '../lib/main.dart';
-import '../lib/views/order_screen.dart';
+import 'package:sandwich_shop/main.dart';
+import 'package:sandwich_shop/views/order_screen.dart';
 
 void main() {
   group('App', () {
@@ -8,6 +8,7 @@ void main() {
         (WidgetTester tester) async {
       const App app = App();
       await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
       expect(find.byType(OrderScreen), findsOneWidget);
     });
   });
