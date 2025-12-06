@@ -17,5 +17,18 @@ void main() {
       expect(find.byType(CircularProgressIndicator), findsNothing);
       expect(find.text('Settings'), findsOneWidget);
     });
+
+    testWidgets('displays all UI elements correctly', (WidgetTester tester) async {
+      await tester.pumpWidget(const MaterialApp(home: SettingsScreen()));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Settings'), findsOneWidget);
+      expect(find.byType(Image), findsOneWidget);
+      expect(find.text('Font Size'), findsOneWidget);
+      expect(find.text('Current size: 16px'), findsOneWidget);
+      expect(find.byType(Slider), findsOneWidget);
+      expect(find.text('This is sample text to preview the font size.'), findsOneWidget);
+      expect(find.text('Back to Order'), findsOneWidget);
+    });
   });
 }
