@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import '../../lib/views/checkout_screen.dart';
-import '../../lib/models/cart.dart';
-import '../../lib/models/sandwich.dart';
+import 'package:provider/provider.dart';
+import 'package:sandwich_shop/views/checkout_screen.dart';
+import 'package:sandwich_shop/models/cart.dart';
+import 'package:sandwich_shop/models/sandwich.dart';
+
+Widget createWidgetUnderTest({Cart? cart}) {
+  return ChangeNotifierProvider<Cart>.value(
+    value: cart ?? Cart(),
+    child: const MaterialApp(
+      home: CheckoutScreen(),
+    ),
+  );
+}
 
 void main() {
   group('CheckoutScreen', () {
     testWidgets('displays order summary with empty cart',
         (WidgetTester tester) async {
       final Cart emptyCart = Cart();
-      final CheckoutScreen checkoutScreen = CheckoutScreen(cart: emptyCart);
-      final MaterialApp app = MaterialApp(home: checkoutScreen);
-
-      await tester.pumpWidget(app);
+      await tester.pumpWidget(createWidgetUnderTest(cart: emptyCart));
 
       expect(find.text('Checkout'), findsOneWidget);
       expect(find.text('Order Summary'), findsOneWidget);
@@ -31,10 +38,7 @@ void main() {
       );
       cart.add(sandwich, quantity: 2);
 
-      final CheckoutScreen checkoutScreen = CheckoutScreen(cart: cart);
-      final MaterialApp app = MaterialApp(home: checkoutScreen);
-
-      await tester.pumpWidget(app);
+      await tester.pumpWidget(createWidgetUnderTest(cart: cart));
 
       expect(find.text('Order Summary'), findsOneWidget);
       expect(find.text('2x Veggie Delight'), findsOneWidget);
@@ -58,10 +62,7 @@ void main() {
       cart.add(sandwich1, quantity: 1);
       cart.add(sandwich2, quantity: 3);
 
-      final CheckoutScreen checkoutScreen = CheckoutScreen(cart: cart);
-      final MaterialApp app = MaterialApp(home: checkoutScreen);
-
-      await tester.pumpWidget(app);
+      await tester.pumpWidget(createWidgetUnderTest(cart: cart));
 
       expect(find.text('1x Veggie Delight'), findsOneWidget);
       expect(find.text('3x Chicken Teriyaki'), findsOneWidget);
@@ -71,10 +72,7 @@ void main() {
     testWidgets('shows confirm payment button initially',
         (WidgetTester tester) async {
       final Cart cart = Cart();
-      final CheckoutScreen checkoutScreen = CheckoutScreen(cart: cart);
-      final MaterialApp app = MaterialApp(home: checkoutScreen);
-
-      await tester.pumpWidget(app);
+      await tester.pumpWidget(createWidgetUnderTest(cart: cart));
 
       expect(find.text('Confirm Payment'), findsOneWidget);
       expect(find.byType(ElevatedButton), findsOneWidget);
@@ -92,10 +90,7 @@ void main() {
       );
       cart.add(sandwich, quantity: 1);
 
-      final CheckoutScreen checkoutScreen = CheckoutScreen(cart: cart);
-      final MaterialApp app = MaterialApp(home: checkoutScreen);
-
-      await tester.pumpWidget(app);
+      await tester.pumpWidget(createWidgetUnderTest(cart: cart));
 
       final Finder confirmButtonFinder = find.text('Confirm Payment');
       await tester.tap(confirmButtonFinder);
@@ -118,10 +113,7 @@ void main() {
       );
       cart.add(footlongSandwich, quantity: 1);
 
-      final CheckoutScreen checkoutScreen = CheckoutScreen(cart: cart);
-      final MaterialApp app = MaterialApp(home: checkoutScreen);
-
-      await tester.pumpWidget(app);
+      await tester.pumpWidget(createWidgetUnderTest(cart: cart));
 
       expect(find.text('1x Veggie Delight'), findsOneWidget);
       expect(find.textContaining('£11.00'), findsWidgets);
@@ -137,10 +129,7 @@ void main() {
       );
       cart.add(sixInchSandwich, quantity: 1);
 
-      final CheckoutScreen checkoutScreen = CheckoutScreen(cart: cart);
-      final MaterialApp app = MaterialApp(home: checkoutScreen);
-
-      await tester.pumpWidget(app);
+      await tester.pumpWidget(createWidgetUnderTest(cart: cart));
 
       expect(find.text('1x Veggie Delight'), findsOneWidget);
       expect(find.textContaining('£7.00'), findsWidgets);
@@ -162,10 +151,7 @@ void main() {
       cart.add(footlongSandwich, quantity: 1);
       cart.add(sixInchSandwich, quantity: 2);
 
-      final CheckoutScreen checkoutScreen = CheckoutScreen(cart: cart);
-      final MaterialApp app = MaterialApp(home: checkoutScreen);
-
-      await tester.pumpWidget(app);
+      await tester.pumpWidget(createWidgetUnderTest(cart: cart));
 
       expect(find.text('1x Veggie Delight'), findsOneWidget);
       expect(find.text('2x Chicken Teriyaki'), findsOneWidget);
@@ -174,10 +160,7 @@ void main() {
 
     testWidgets('has proper layout structure', (WidgetTester tester) async {
       final Cart cart = Cart();
-      final CheckoutScreen checkoutScreen = CheckoutScreen(cart: cart);
-      final MaterialApp app = MaterialApp(home: checkoutScreen);
-
-      await tester.pumpWidget(app);
+      await tester.pumpWidget(createWidgetUnderTest(cart: cart));
 
       expect(find.byType(Scaffold), findsOneWidget);
       expect(find.byType(AppBar), findsOneWidget);
@@ -188,10 +171,7 @@ void main() {
     testWidgets('payment method text is displayed correctly',
         (WidgetTester tester) async {
       final Cart cart = Cart();
-      final CheckoutScreen checkoutScreen = CheckoutScreen(cart: cart);
-      final MaterialApp app = MaterialApp(home: checkoutScreen);
-
-      await tester.pumpWidget(app);
+      await tester.pumpWidget(createWidgetUnderTest(cart: cart));
 
       final Finder paymentMethodFinder =
           find.text('Payment Method: Card ending in 1234');
@@ -211,10 +191,7 @@ void main() {
       );
       cart.add(sandwich, quantity: 1);
 
-      final CheckoutScreen checkoutScreen = CheckoutScreen(cart: cart);
-      final MaterialApp app = MaterialApp(home: checkoutScreen);
-
-      await tester.pumpWidget(app);
+      await tester.pumpWidget(createWidgetUnderTest(cart: cart));
 
       final Finder rowFinders = find.byType(Row);
       expect(rowFinders, findsWidgets);
@@ -236,10 +213,7 @@ void main() {
       );
       cart.add(sandwich, quantity: 1);
 
-      final CheckoutScreen checkoutScreen = CheckoutScreen(cart: cart);
-      final MaterialApp app = MaterialApp(home: checkoutScreen);
-
-      await tester.pumpWidget(app);
+      await tester.pumpWidget(createWidgetUnderTest(cart: cart));
 
       expect(find.byType(Divider), findsOneWidget);
     });
@@ -254,10 +228,7 @@ void main() {
       );
       cart.add(sandwich, quantity: 3);
 
-      final CheckoutScreen checkoutScreen = CheckoutScreen(cart: cart);
-      final MaterialApp app = MaterialApp(home: checkoutScreen);
-
-      await tester.pumpWidget(app);
+      await tester.pumpWidget(createWidgetUnderTest(cart: cart));
 
       expect(find.text('3x Chicken Teriyaki'), findsOneWidget);
     });
