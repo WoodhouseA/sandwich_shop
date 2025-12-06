@@ -48,4 +48,24 @@ void main() {
       expect(find.text('0'), findsOneWidget);
     });
   });
+
+  group('SandwichShopAppBar', () {
+    testWidgets('renders title and cart badge by default', (WidgetTester tester) async {
+      final Cart cart = Cart();
+      await tester.pumpWidget(
+        ChangeNotifierProvider<Cart>.value(
+          value: cart,
+          child: const MaterialApp(
+            home: Scaffold(
+              appBar: SandwichShopAppBar(title: 'Test Title'),
+            ),
+          ),
+        ),
+      );
+
+      expect(find.text('Test Title'), findsOneWidget);
+      expect(find.byType(CartBadge), findsOneWidget);
+      expect(find.byType(Image), findsOneWidget);
+    });
+  });
 }
