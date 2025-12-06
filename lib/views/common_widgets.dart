@@ -62,3 +62,35 @@ class CartBadge extends StatelessWidget {
     );
   }
 }
+
+class SandwichShopAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+  final bool showCartAction;
+
+  const SandwichShopAppBar({
+    super.key,
+    required this.title,
+    this.showCartAction = true,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      leading: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SizedBox(
+          height: 100,
+          child: Image.asset('assets/images/logo.png'),
+        ),
+      ),
+      title: Text(
+        title,
+        style: AppStyles.heading1,
+      ),
+      actions: showCartAction ? [const CartBadge()] : null,
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
