@@ -56,7 +56,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile', style: heading1),
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SizedBox(
+            height: 100,
+            child: Image.asset('assets/images/logo.png'),
+          ),
+        ),
+        title: const Text(
+          'Profile',
+          style: heading1,
+        ),
+        actions: [
+          Consumer<Cart>(
+            builder: (context, cart, child) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.shopping_cart),
+                    const SizedBox(width: 4),
+                    Text('${cart.countOfItems}'),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
