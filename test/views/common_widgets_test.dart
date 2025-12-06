@@ -67,5 +67,25 @@ void main() {
       expect(find.byType(CartBadge), findsOneWidget);
       expect(find.byType(Image), findsOneWidget);
     });
+
+    testWidgets('hides cart badge when showCartAction is false', (WidgetTester tester) async {
+      final Cart cart = Cart();
+      await tester.pumpWidget(
+        ChangeNotifierProvider<Cart>.value(
+          value: cart,
+          child: const MaterialApp(
+            home: Scaffold(
+              appBar: SandwichShopAppBar(
+                title: 'Test Title',
+                showCartAction: false,
+              ),
+            ),
+          ),
+        ),
+      );
+
+      expect(find.text('Test Title'), findsOneWidget);
+      expect(find.byType(CartBadge), findsNothing);
+    });
   });
 }
