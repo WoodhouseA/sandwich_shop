@@ -75,5 +75,15 @@ void main() {
       expect(find.byType(SettingsScreen), findsNothing);
       expect(find.text('Go to Settings'), findsOneWidget);
     });
+    
+    testWidgets('loads saved font size from SharedPreferences', (WidgetTester tester) async {
+      SharedPreferences.setMockInitialValues({'fontSize': 20.0});
+      
+      await tester.pumpWidget(const MaterialApp(home: SettingsScreen()));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Current size: 20px'), findsOneWidget);
+      expect(AppStyles.baseFontSize, 20.0);
+    });
   });
 }
