@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import '../../lib/models/cart.dart';
-import '../../lib/models/sandwich.dart';
+import 'package:sandwich_shop/models/cart.dart';
+import 'package:sandwich_shop/models/sandwich.dart';
 
 void main() {
   group('Cart', () {
