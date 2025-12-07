@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sandwich_shop/views/widgets/app_drawer.dart';
+import 'package:sandwich_shop/views/common_widgets.dart';
 
 void main() {
   testWidgets('AppDrawer renders all menu items', (WidgetTester tester) async {
@@ -15,8 +15,8 @@ void main() {
     expect(find.text('Sandwich Shop'), findsOneWidget);
     expect(find.text('Order'), findsOneWidget);
     expect(find.text('Cart'), findsOneWidget);
-    expect(find.text('About'), findsOneWidget);
-    expect(find.text('Sign In / Sign Up'), findsOneWidget);
+    expect(find.text('Profile'), findsOneWidget);
+    expect(find.text('Settings'), findsOneWidget);
   });
 
   testWidgets('AppDrawer highlights the current route', (WidgetTester tester) async {
@@ -46,19 +46,19 @@ void main() {
 
     // Others should be null (default color)
     expectColor('Order', null);
-    expectColor('About', null);
+    expectColor('Profile', null);
   });
 
-  testWidgets('AppDrawer highlights About route correctly', (WidgetTester tester) async {
+  testWidgets('AppDrawer highlights Profile route correctly', (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
-          body: AppDrawer(currentRoute: '/about'),
+          body: AppDrawer(currentRoute: '/profile'),
         ),
       ),
     );
 
-    final textWidget = tester.widget<Text>(find.text('About'));
+    final textWidget = tester.widget<Text>(find.text('Profile'));
     expect(textWidget.style?.color, Colors.blue);
     
     final orderTextWidget = tester.widget<Text>(find.text('Order'));
