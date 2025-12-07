@@ -162,8 +162,10 @@ class _OrderScreenState extends State<OrderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const SandwichShopAppBar(title: 'Sandwich Counter'),
+    return ResponsiveScaffold(
+      title: const Text('Sandwich Counter'),
+      currentRoute: '/order',
+      actions: const [CartBadge()],
       body: Center(
         child: SingleChildScrollView(
           child: Column(
