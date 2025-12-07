@@ -25,7 +25,8 @@ void main() {
 
       expect(find.text('Sandwich Counter'), findsOneWidget);
 
-      expect(find.byType(Image), findsNWidgets(2));
+      // Only 1 image (sandwich), logo in AppBar is not present in ResponsiveScaffold's AppBar
+      expect(find.byType(Image), findsOneWidget);
 
       expect(find.text('Veggie Delight'), findsWidgets);
 
