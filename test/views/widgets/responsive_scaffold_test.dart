@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sandwich_shop/views/widgets/responsive_scaffold.dart';
-import 'package:sandwich_shop/views/widgets/app_drawer.dart';
+import 'package:sandwich_shop/views/common_widgets.dart';
 
 void main() {
   testWidgets('ResponsiveScaffold shows Drawer on mobile',
@@ -83,15 +82,15 @@ void main() {
                 title: Text('Cart'),
                 currentRoute: '/cart',
               ),
-          '/about': (context) => const ResponsiveScaffold(
-                body: Text('About Screen'),
-                title: Text('About'),
-                currentRoute: '/about',
+          '/profile': (context) => const ResponsiveScaffold(
+                body: Text('Profile Screen'),
+                title: Text('Profile'),
+                currentRoute: '/profile',
               ),
-          '/auth': (context) => const ResponsiveScaffold(
-                body: Text('Auth Screen'),
-                title: Text('Auth'),
-                currentRoute: '/auth',
+          '/settings': (context) => const ResponsiveScaffold(
+                body: Text('Settings Screen'),
+                title: Text('Settings'),
+                currentRoute: '/settings',
               ),
         },
       ),
@@ -113,11 +112,11 @@ void main() {
     await tester.tap(find.byIcon(Icons.menu));
     await tester.pumpAndSettle();
 
-    // Tap About link
-    await tester.tap(find.text('About'));
+    // Tap Profile link
+    await tester.tap(find.text('Profile'));
     await tester.pumpAndSettle();
 
-    // Verify navigation to About
-    expect(find.text('About Screen'), findsOneWidget);
+    // Verify navigation to Profile
+    expect(find.text('Profile Screen'), findsOneWidget);
   });
 }
