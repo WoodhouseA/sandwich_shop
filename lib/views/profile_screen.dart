@@ -53,8 +53,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const SandwichShopAppBar(title: 'Profile'),
+    return ResponsiveScaffold(
+      title: const Text('Profile'),
+      currentRoute: '/profile',
+      actions: const [CartBadge()],
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
