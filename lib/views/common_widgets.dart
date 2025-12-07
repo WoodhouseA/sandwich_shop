@@ -129,9 +129,9 @@ class AppDrawer extends StatelessWidget {
           ),
           _buildListTile(context, 'Order', Icons.restaurant_menu, '/order'),
           _buildListTile(context, 'Cart', Icons.shopping_cart, '/cart'),
-          _buildListTile(context, 'About', Icons.info, '/about'),
+          _buildListTile(context, 'Profile', Icons.person, '/profile'),
           const Divider(),
-          _buildListTile(context, 'Sign In / Sign Up', Icons.person, '/auth'),
+          _buildListTile(context, 'Settings', Icons.settings, '/settings'),
         ],
       ),
     );
