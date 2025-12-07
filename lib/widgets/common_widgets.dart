@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sandwich_shop/views/app_styles.dart';
+<<<<<<< HEAD
 import 'package:sandwich_shop/views/order_screen.dart';
 import 'package:sandwich_shop/views/order_history_screen.dart';
 import 'package:sandwich_shop/views/profile_screen.dart';
 import 'package:sandwich_shop/views/settings_screen.dart';
+=======
+>>>>>>> 899750d192265fe0882eb84e662eb4cfc95e5da4
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -18,6 +21,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+<<<<<<< HEAD
       leading: Builder(
         builder: (BuildContext context) {
           final bool hasDrawer = Scaffold.of(context).hasDrawer;
@@ -37,6 +41,14 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           );
         },
+=======
+      leading: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SizedBox(
+          height: 100,
+          child: Image.asset('assets/images/logo.png'),
+        ),
+>>>>>>> 899750d192265fe0882eb84e662eb4cfc95e5da4
       ),
       title: Text(title, style: AppStyles.heading1),
       actions: actions,
@@ -82,6 +94,7 @@ class StyledButton extends StatelessWidget {
     );
   }
 }
+<<<<<<< HEAD
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -204,3 +217,5 @@ class ResponsiveScaffold extends StatelessWidget {
     );
   }
 }
+=======
+>>>>>>> 899750d192265fe0882eb84e662eb4cfc95e5da4

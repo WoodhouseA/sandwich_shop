@@ -28,7 +28,11 @@ void main() {
       await tester.pumpWidget(app);
       await tester.pumpAndSettle();
 
+<<<<<<< HEAD
       expect(find.descendant(of: find.byType(AppBar), matching: find.text('Settings')), findsOneWidget);
+=======
+      expect(find.text('Settings'), findsOneWidget);
+>>>>>>> 899750d192265fe0882eb84e662eb4cfc95e5da4
       expect(find.text('Font Size'), findsOneWidget);
       expect(find.text('Current size: 16px'), findsOneWidget);
       expect(find.byType(Slider), findsOneWidget);

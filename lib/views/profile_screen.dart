@@ -55,6 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return ResponsiveScaffold(
       title: 'Profile',
       actions: [
@@ -74,6 +75,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
           },
         ),
       ],
+=======
+    return Scaffold(
+      appBar: CommonAppBar(
+        title: 'Profile',
+        actions: [
+          Consumer<Cart>(
+            builder: (context, cart, child) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.shopping_cart),
+                    const SizedBox(width: 4),
+                    Text('${cart.countOfItems}'),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+>>>>>>> 899750d192265fe0882eb84e662eb4cfc95e5da4
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

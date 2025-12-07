@@ -45,8 +45,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
       );
     }
 
+<<<<<<< HEAD
     return ResponsiveScaffold(
       title: 'Settings',
+=======
+    return Scaffold(
+      appBar: const CommonAppBar(title: 'Settings'),
+>>>>>>> 899750d192265fe0882eb84e662eb4cfc95e5da4
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

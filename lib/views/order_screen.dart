@@ -172,6 +172,7 @@ class _OrderScreenState extends State<OrderScreen> {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return ResponsiveScaffold(
       title: 'Sandwich Counter',
       actions: [
@@ -191,6 +192,29 @@ class _OrderScreenState extends State<OrderScreen> {
           },
         ),
       ],
+=======
+    return Scaffold(
+      appBar: CommonAppBar(
+        title: 'Sandwich Counter',
+        actions: [
+          Consumer<Cart>(
+            builder: (context, cart, child) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.shopping_cart),
+                    const SizedBox(width: 4),
+                    Text('${cart.countOfItems}'),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+>>>>>>> 899750d192265fe0882eb84e662eb4cfc95e5da4
       body: Center(
         child: SingleChildScrollView(
           child: Column(
