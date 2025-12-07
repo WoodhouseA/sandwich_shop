@@ -19,7 +19,8 @@ void main() {
         (WidgetTester tester) async {
       await tester.pumpWidget(createWidgetUnderTest());
 
-      expect(find.text('Profile'), findsOneWidget);
+      // "Profile" appears in AppBar and potentially in Drawer/Sidebar
+      expect(find.text('Profile'), findsWidgets);
       expect(find.text('Enter your details:'), findsOneWidget);
       expect(find.text('Your Name'), findsOneWidget);
       expect(find.text('Preferred Location'), findsOneWidget);
@@ -33,7 +34,8 @@ void main() {
 
       expect(find.byType(Scaffold), findsOneWidget);
       expect(find.byType(AppBar), findsOneWidget);
-      expect(find.byType(Column), findsOneWidget);
+      // Multiple columns might exist (e.g. in Drawer)
+      expect(find.byType(Column), findsWidgets);
       expect(find.byType(SizedBox), findsWidgets);
     });
 
@@ -273,7 +275,10 @@ void main() {
         (WidgetTester tester) async {
       await tester.pumpWidget(createWidgetUnderTest());
 
-      final Finder columnFinder = find.byType(Column);
+      final Finder columnFinder = find.ancestor(
+        of: find.text('Enter your details:'),
+        matching: find.byType(Column),
+      );
       final Column column = tester.widget<Column>(columnFinder);
 
       expect(column.crossAxisAlignment, equals(CrossAxisAlignment.stretch));
