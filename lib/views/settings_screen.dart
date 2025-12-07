@@ -44,11 +44,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       );
     }
 
-    return Scaffold(
-      appBar: const SandwichShopAppBar(
-        title: 'Settings',
-        showCartAction: false,
-      ),
+    return ResponsiveScaffold(
+      title: const Text('Settings'),
+      currentRoute: '/settings',
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
