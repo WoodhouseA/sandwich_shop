@@ -94,3 +94,145 @@ class SandwichShopAppBar extends StatelessWidget implements PreferredSizeWidget 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
+
+class AppDrawer extends StatelessWidget {
+  final String currentRoute;
+
+  const AppDrawer({super.key, required this.currentRoute});
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          const DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.blue,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Icon(Icons.fastfood, size: 48, color: Colors.white),
+                SizedBox(height: 16),
+                Text(
+                  'Sandwich Shop',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          _buildListTile(context, 'Order', Icons.restaurant_menu, '/order'),
+          _buildListTile(context, 'Cart', Icons.shopping_cart, '/cart'),
+          _buildListTile(context, 'About', Icons.info, '/about'),
+          const Divider(),
+          _buildListTile(context, 'Sign In / Sign Up', Icons.person, '/auth'),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildListTile(
+      BuildContext context, String title, IconData icon, String route) {
+    final bool isSelected = currentRoute == route;
+    return ListTile(
+      leading: Icon(icon, color: isSelected ? Colors.blue : null),
+      title: Text(
+        title,
+        style: TextStyle(
+          color: isSelected ? Colors.blue : null,
+          fontWeight: isSelected ? FontWeight.bold : null,
+        ),
+      ),
+      selected: isSelected,
+      onTap: () {
+        if (isSelected) {
+          if (Scaffold.of(context).hasDrawer &&
+              Scaffold.of(context).isDrawerOpen) {
+            Navigator.pop(context);
+          }
+          return;
+        }
+
+        // Close drawer if open
+        if (Scaffold.of(context).hasDrawer &&
+            Scaffold.of(context).isDrawerOpen) {
+          Navigator.pop(context);
+        }
+
+        // Navigate
+        if (route == '/order') {
+          // Go back to home
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/order', (route) => false);
+        } else {
+          // Push new screen
+          Navigator.pushNamed(context, route);
+        }
+      },
+    );
+  }
+}
+
+class ResponsiveScaffold extends StatelessWidget {
+  final Widget body;
+  final Widget? title;
+  final String currentRoute;
+  final List<Widget>? actions;
+  final Widget? floatingActionButton;
+
+  const ResponsiveScaffold({
+    super.key,
+    required this.body,
+    required this.currentRoute,
+    this.title,
+    this.actions,
+    this.floatingActionButton,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth < 600) {
+          // Mobile: Modal Drawer
+          return Scaffold(
+            appBar: AppBar(
+              title: title,
+              actions: actions,
+            ),
+            drawer: AppDrawer(currentRoute: currentRoute),
+            body: body,
+            floatingActionButton: floatingActionButton,
+          );
+        } else {
+          // Desktop: Permanent Sidebar
+          return Scaffold(
+            appBar: AppBar(
+              title: title,
+              actions: actions,
+              // On desktop, we might want to hide the hamburger if we have a sidebar
+              automaticallyImplyLeading: false,
+            ),
+            body: Row(
+              children: [
+                SizedBox(
+                  width: 250,
+                  child: AppDrawer(currentRoute: currentRoute),
+                ),
+                const VerticalDivider(width: 1),
+                Expanded(child: body),
+              ],
+            ),
+            floatingActionButton: floatingActionButton,
+          );
+        }
+      },
+    );
+  }
+}
