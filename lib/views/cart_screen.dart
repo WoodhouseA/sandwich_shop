@@ -105,8 +105,10 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const SandwichShopAppBar(title: 'Cart View'),
+    return ResponsiveScaffold(
+      title: const Text('Cart View'),
+      currentRoute: '/cart',
+      actions: const [CartBadge()],
       body: Center(
         child: SingleChildScrollView(
           child: Consumer<Cart>(
