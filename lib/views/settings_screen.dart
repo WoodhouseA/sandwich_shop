@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sandwich_shop/views/app_styles.dart';
-import 'package:sandwich_shop/views/common_widgets.dart';
+import 'package:sandwich_shop/widgets/common_widgets.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -44,9 +44,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       );
     }
 
-    return ResponsiveScaffold(
-      title: const Text('Settings'),
-      currentRoute: '/settings',
+    return Scaffold(
+      appBar: const CommonAppBar(title: 'Settings'),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

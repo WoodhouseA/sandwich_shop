@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sandwich_shop/models/cart.dart';
 import 'package:sandwich_shop/views/order_screen.dart';
-import 'package:sandwich_shop/views/cart_screen.dart';
-import 'package:sandwich_shop/views/profile_screen.dart';
-import 'package:sandwich_shop/views/settings_screen.dart';
 import 'package:sandwich_shop/views/app_styles.dart';
 
 void main() async {
@@ -22,16 +19,10 @@ class App extends StatelessWidget {
       create: (BuildContext context) {
         return Cart();
       },
-      child: MaterialApp(
+      child: const MaterialApp(
         title: 'Sandwich Shop App',
         debugShowCheckedModeBanner: false,
-        initialRoute: '/order',
-        routes: {
-          '/order': (context) => const OrderScreen(maxQuantity: 5),
-          '/cart': (context) => const CartScreen(),
-          '/profile': (context) => const ProfileScreen(),
-          '/settings': (context) => const SettingsScreen(),
-        },
+        home: OrderScreen(maxQuantity: 5),
       ),
     );
   }
