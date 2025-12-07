@@ -45,25 +45,15 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
-<<<<<<< HEAD
       return const ResponsiveScaffold(
         title: 'Order History',
-=======
-      return const Scaffold(
-        appBar: CommonAppBar(title: 'Order History'),
->>>>>>> 899750d192265fe0882eb84e662eb4cfc95e5da4
         body: Center(child: CircularProgressIndicator()),
       );
     }
 
     if (_orders.isEmpty) {
-<<<<<<< HEAD
       return ResponsiveScaffold(
         title: 'Order History',
-=======
-      return Scaffold(
-        appBar: const CommonAppBar(title: 'Order History'),
->>>>>>> 899750d192265fe0882eb84e662eb4cfc95e5da4
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -83,13 +73,8 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
       );
     }
 
-<<<<<<< HEAD
     return ResponsiveScaffold(
       title: 'Order History',
-=======
-    return Scaffold(
-      appBar: const CommonAppBar(title: 'Order History'),
->>>>>>> 899750d192265fe0882eb84e662eb4cfc95e5da4
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(

@@ -16,11 +16,7 @@ void main() {
 
       await tester.pumpWidget(app);
 
-<<<<<<< HEAD
       expect(find.descendant(of: find.byType(AppBar), matching: find.text('Order History')), findsOneWidget);
-=======
-      expect(find.text('Order History'), findsOneWidget);
->>>>>>> 899750d192265fe0882eb84e662eb4cfc95e5da4
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
       testCommonAppBarLogo(tester);
       testBasicScaffoldStructure(tester);

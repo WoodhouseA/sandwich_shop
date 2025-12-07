@@ -136,7 +136,6 @@ void main() {
       expect(find.text('Star Button'), findsOneWidget);
     });
   });
-<<<<<<< HEAD
 
   group('AppDrawer', () {
     testWidgets('renders all menu items', (WidgetTester tester) async {
@@ -220,6 +219,3 @@ void main() {
   });
 }
 
-=======
-}
->>>>>>> 899750d192265fe0882eb84e662eb4cfc95e5da4

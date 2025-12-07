@@ -15,11 +15,7 @@ void main() {
 
       await tester.pumpWidget(app);
 
-<<<<<<< HEAD
       expect(find.descendant(of: find.byType(AppBar), matching: find.text('Profile')), findsOneWidget);
-=======
-      expect(find.text('Profile'), findsOneWidget);
->>>>>>> 899750d192265fe0882eb84e662eb4cfc95e5da4
       expect(find.text('Enter your details:'), findsOneWidget);
       expect(find.text('Your Name'), findsOneWidget);
       expect(find.text('Preferred Location'), findsOneWidget);
@@ -39,11 +35,7 @@ void main() {
       testCommonAppBarLogo(tester);
       testCartIndicator(tester, 0);
       testBasicScaffoldStructure(tester);
-<<<<<<< HEAD
       // expect(find.byType(Column), findsOneWidget); // Removed as ResponsiveScaffold adds more columns
-=======
-      expect(find.byType(Column), findsOneWidget);
->>>>>>> 899750d192265fe0882eb84e662eb4cfc95e5da4
       expect(find.byType(SizedBox), findsWidgets);
     });
 
@@ -338,14 +330,10 @@ void main() {
 
       await tester.pumpWidget(app);
 
-<<<<<<< HEAD
       final Finder columnFinder = find.ancestor(
         of: find.text('Enter your details:'),
         matching: find.byType(Column),
       ).first;
-=======
-      final Finder columnFinder = find.byType(Column);
->>>>>>> 899750d192265fe0882eb84e662eb4cfc95e5da4
       final Column column = tester.widget<Column>(columnFinder);
 
       expect(column.crossAxisAlignment, equals(CrossAxisAlignment.stretch));
