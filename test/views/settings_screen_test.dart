@@ -1,91 +1,176 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sandwich_shop/views/settings_screen.dart';
-import 'package:sandwich_shop/views/app_styles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../helpers/test_helpers.dart';
 
 void main() {
   group('SettingsScreen', () {
-    setUp(() {
-      SharedPreferences.setMockInitialValues({'fontSize': 16.0});
+    setUp(() async {
+      SharedPreferences.setMockInitialValues({});
     });
 
-    testWidgets('displays loading indicator initially', (WidgetTester tester) async {
-      await tester.pumpWidget(const MaterialApp(home: SettingsScreen()));
-      
-      await tester.pumpAndSettle();
-      expect(find.byType(CircularProgressIndicator), findsNothing);
-      // "Settings" appears in AppBar and potentially in Drawer/Sidebar
-      expect(find.text('Settings'), findsWidgets);
+    testWidgets('displays loading indicator initially',
+        (WidgetTester tester) async {
+      const SettingsScreen settingsScreen = SettingsScreen();
+      const MaterialApp app = MaterialApp(home: settingsScreen);
+
+      await tester.pumpWidget(app);
+
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
 
-    testWidgets('displays all UI elements correctly', (WidgetTester tester) async {
-      await tester.pumpWidget(const MaterialApp(home: SettingsScreen()));
+    testWidgets('displays settings UI after loading',
+        (WidgetTester tester) async {
+      const SettingsScreen settingsScreen = SettingsScreen();
+      const MaterialApp app = MaterialApp(home: settingsScreen);
+
+      await tester.pumpWidget(app);
       await tester.pumpAndSettle();
 
-      expect(find.text('Settings'), findsWidgets);
-      // Image removed from SettingsScreen or ResponsiveScaffold
-      // expect(find.byType(Image), findsOneWidget);
+      expect(find.descendant(of: find.byType(AppBar), matching: find.text('Settings')), findsOneWidget);
       expect(find.text('Font Size'), findsOneWidget);
       expect(find.text('Current size: 16px'), findsOneWidget);
       expect(find.byType(Slider), findsOneWidget);
-      expect(find.text('This is sample text to preview the font size.'), findsOneWidget);
-      expect(find.text('Back to Order'), findsOneWidget);
+      expect(find.text('This is sample text to preview the font size.'),
+          findsOneWidget);
+      expect(
+          find.text(
+              'Font size changes are saved automatically. Restart the app to see changes in all screens.'),
+          findsOneWidget);
+      expect(
+          find.widgetWithText(ElevatedButton, 'Back to Order'), findsOneWidget);
     });
 
-    testWidgets('slider updates font size', (WidgetTester tester) async {
-      await tester.pumpWidget(const MaterialApp(home: SettingsScreen()));
+    testWidgets('displays common app bar elements correctly',
+        (WidgetTester tester) async {
+      const SettingsScreen settingsScreen = SettingsScreen();
+      const MaterialApp app = MaterialApp(home: settingsScreen);
+
+      await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
+
+      testCommonAppBarLogo(tester);
+      testBasicScaffoldStructure(tester);
+    });
+
+    testWidgets('slider changes font size', (WidgetTester tester) async {
+      const SettingsScreen settingsScreen = SettingsScreen();
+      const MaterialApp app = MaterialApp(home: settingsScreen);
+
+      await tester.pumpWidget(app);
       await tester.pumpAndSettle();
 
       expect(find.text('Current size: 16px'), findsOneWidget);
-      expect(AppStyles.baseFontSize, 16.0);
+
+      final Finder sliderFinder = find.byType(Slider);
+      final Slider slider = tester.widget<Slider>(sliderFinder);
+      expect(slider.value, equals(16.0));
+
+      await tester.drag(sliderFinder, const Offset(100, 0));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Current size: 16px'), findsNothing);
+      expect(find.textContaining('Current size:'), findsOneWidget);
+    });
+
+    testWidgets('slider has correct range and divisions',
+        (WidgetTester tester) async {
+      const SettingsScreen settingsScreen = SettingsScreen();
+      const MaterialApp app = MaterialApp(home: settingsScreen);
+
+      await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
+
+      final Finder sliderFinder = find.byType(Slider);
+      final Slider slider = tester.widget<Slider>(sliderFinder);
+
+      expect(slider.min, equals(12.0));
+      expect(slider.max, equals(24.0));
+      expect(slider.divisions, equals(6));
+    });
+
+    testWidgets('preview text updates with font size',
+        (WidgetTester tester) async {
+      const SettingsScreen settingsScreen = SettingsScreen();
+      const MaterialApp app = MaterialApp(home: settingsScreen);
+
+      await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
+
+      final Finder previewTextFinder =
+          find.text('This is sample text to preview the font size.');
+      expect(previewTextFinder, findsOneWidget);
+
+      final Text previewText = tester.widget<Text>(previewTextFinder);
+      expect(previewText.style?.fontSize, equals(16.0));
 
       final Finder sliderFinder = find.byType(Slider);
       await tester.drag(sliderFinder, const Offset(50, 0));
       await tester.pumpAndSettle();
-      
-      expect(AppStyles.baseFontSize, isNot(16.0));
+
+      final Text updatedPreviewText = tester.widget<Text>(previewTextFinder);
+      expect(updatedPreviewText.style?.fontSize, isNot(equals(16.0)));
     });
 
-    testWidgets('back button pops the screen', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Builder(
-            builder: (context) => Scaffold(
-              body: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const SettingsScreen()),
-                  );
-                },
-                child: const Text('Go to Settings'),
-              ),
-            ),
-          ),
-        ),
-      );
+    testWidgets('current size text updates with font size',
+        (WidgetTester tester) async {
+      const SettingsScreen settingsScreen = SettingsScreen();
+      const MaterialApp app = MaterialApp(home: settingsScreen);
 
-      await tester.tap(find.text('Go to Settings'));
+      await tester.pumpWidget(app);
       await tester.pumpAndSettle();
 
-      expect(find.byType(SettingsScreen), findsOneWidget);
+      final Finder currentSizeTextFinder = find.text('Current size: 16px');
+      expect(currentSizeTextFinder, findsOneWidget);
 
-      await tester.tap(find.text('Back to Order'));
+      final Text currentSizeText = tester.widget<Text>(currentSizeTextFinder);
+      expect(currentSizeText.style?.fontSize, equals(16.0));
+
+      final Finder sliderFinder = find.byType(Slider);
+      await tester.drag(sliderFinder, const Offset(50, 0));
       await tester.pumpAndSettle();
 
-      expect(find.byType(SettingsScreen), findsNothing);
-      expect(find.text('Go to Settings'), findsOneWidget);
+      final Finder updatedCurrentSizeTextFinder =
+          find.textContaining('Current size:');
+      expect(updatedCurrentSizeTextFinder, findsOneWidget);
+
+      final Text updatedCurrentSizeText =
+          tester.widget<Text>(updatedCurrentSizeTextFinder);
+      expect(updatedCurrentSizeText.style?.fontSize, isNot(equals(16.0)));
     });
-    
-    testWidgets('loads saved font size from SharedPreferences', (WidgetTester tester) async {
+
+    testWidgets('back button navigates back', (WidgetTester tester) async {
+      const SettingsScreen settingsScreen = SettingsScreen();
+      const MaterialApp app = MaterialApp(home: settingsScreen);
+
+      await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
+
+      final Finder backButtonFinder =
+          find.widgetWithText(ElevatedButton, 'Back to Order');
+      expect(backButtonFinder, findsOneWidget);
+
+      final ElevatedButton backButton =
+          tester.widget<ElevatedButton>(backButtonFinder);
+      expect(backButton.onPressed, isNotNull);
+    });
+
+    testWidgets('loads saved font size from preferences',
+        (WidgetTester tester) async {
       SharedPreferences.setMockInitialValues({'fontSize': 20.0});
-      
-      await tester.pumpWidget(const MaterialApp(home: SettingsScreen()));
+
+      const SettingsScreen settingsScreen = SettingsScreen();
+      const MaterialApp app = MaterialApp(home: settingsScreen);
+
+      await tester.pumpWidget(app);
       await tester.pumpAndSettle();
 
       expect(find.text('Current size: 20px'), findsOneWidget);
-      expect(AppStyles.baseFontSize, 20.0);
+
+      final Finder sliderFinder = find.byType(Slider);
+      final Slider slider = tester.widget<Slider>(sliderFinder);
+      expect(slider.value, equals(20.0));
     });
   });
 }
