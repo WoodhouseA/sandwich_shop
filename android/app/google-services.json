@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "288558159532",
+    "project_id": "sandwhich-shop",
+    "storage_bucket": "sandwhich-shop.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:288558159532:android:39334d7e7254436337f109",
+        "android_client_info": {
+          "package_name": "com.example.sandwich_shop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeXfpkA7MkSltL8atAbdCuoJswYZtQqFA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
