@@ -131,6 +131,32 @@ void main() {
       expect(find.text('Veggie Delight'), findsNothing);
     });
 
+    testWidgets('update profile', (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+
+      // Navigate to Profile
+      final profileButton = find.widgetWithText(StyledButton, 'Profile');
+      await tester.ensureVisible(profileButton);
+      await tester.tap(profileButton);
+      await tester.pumpAndSettle();
+
+      expect(find.widgetWithText(AppBar, 'Profile'), findsOneWidget);
+
+      // Enter details
+      await tester.enterText(find.byType(TextField).at(0), 'John Doe');
+      await tester.enterText(find.byType(TextField).at(1), 'New York');
+      await tester.pumpAndSettle();
+
+      // Save
+      final saveButton = find.widgetWithText(ElevatedButton, 'Save Profile');
+      await tester.tap(saveButton);
+      await tester.pumpAndSettle();
+
+      // Verify welcome message on home screen
+      expect(find.text('Welcome, John Doe! Ordering from New York'), findsOneWidget);
+    });
+
     testWidgets('complete checkout flow', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
