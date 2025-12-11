@@ -1,18 +1,17 @@
 # Sandwich Shop App
 
-A Flutter app for ordering sandwiches. The app demonstrates a simple stateful UI with sandwich selection, quantity controls, size toggles, bread choices, and a shopping cart.
+A Flutter app for ordering sandwiches. The app demonstrates a stateful UI with sandwich selection, cart management, local persistence, and user settings.
 
-> Note: This project was scaffolded for learning/demo purposes. It focuses on UI/state handling and does not include backend persistence or payment flows.
+> Note: This project was scaffolded for learning/demo purposes.
 
 ## Key Features
 
-- Select from a variety of sandwich types.
-- View an image for each type of sandwich.
-- Increment and decrement sandwich quantity.
-- Toggle between six-inch and footlong sandwich sizes.
-- Choose a bread type from a dropdown (e.g., white, wheat).
-- Add multiple sandwiches to a shopping cart.
-- View all items in the cart on a separate screen.
+- **Sandwich Customization**: Select sandwich type, size (six-inch/footlong), bread type, and quantity.
+- **Shopping Cart**: Add multiple items to a cart, view cart contents, and proceed to checkout.
+- **Order History**: Persist placed orders locally using SQLite and view past order details.
+- **Settings**: Customize app appearance (e.g., font size) with preferences saved locally.
+- **Responsive Design**: Adaptive UI for different screen sizes.
+- **Firebase Integration**: Initialized for future backend capabilities.
 
 ## Installation & Setup
 
@@ -45,24 +44,11 @@ flutter run
 
 ## How to Use
 
-Open the app and you'll see the main order screen:
-
-- An image of the currently selected sandwich.
-- A dropdown to select the sandwich type.
-- A size toggle (six-inch / footlong) implemented with a `Switch`.
-- A dropdown to select bread type.
-- `Add` and `Remove` buttons to change the quantity.
-- An "Add to Cart" button to add the configured sandwich to your order.
-- A "View Cart" button to navigate to the cart screen.
-
-Typical flows
-
-- Choose a sandwich: select a sandwich from the "Sandwich Type" dropdown.
-- Change quantity: use the `+` and `-` buttons.
-- Change size: flip the Switch between "six-inch" and "footlong".
-- Change bread: select from the "Bread Type" dropdown menu.
-- Add to order: press the "Add to Cart" button. A confirmation message will appear.
-- View your order: press the "View Cart" button to see all items you've added.
+1.  **Order**: Customize your sandwich on the main screen and add it to the cart.
+2.  **Cart**: View your selected items in the cart screen.
+3.  **Checkout**: Finalize your order. This saves the order to your local history.
+4.  **History**: View your past orders in the Order History screen.
+5.  **Settings**: Adjust font size in the Settings screen.
 
 Running tests
 
@@ -76,34 +62,31 @@ flutter test
 
 Top-level layout (important files/folders):
 
-- `lib/main.dart` — The main app entry. Contains `OrderScreen` and UI widgets.
-- `lib/models/sandwich.dart` — Defines the `Sandwich` data model and related enums.
-- `lib/models/cart.dart` — Manages the state of the shopping cart.
-- `lib/views/cart_screen.dart` — The screen that displays the contents of the shopping cart.
-- `lib/views/app_styles.dart` — Shared text styles used by the UI.
-- `assets/sandwiches.json` — A JSON file containing data for the available sandwiches.
-- `assets/images/` — Contains the images for each sandwich.
-- `pubspec.yaml` — Flutter project manifest and dependency list.
-- `test/` — Unit and widget tests.
-
-You can inspect and extend these files to add new behavior, persistence, or network-backed order submission.
+- `lib/main.dart` — App entry point, initializes Firebase and SQLite.
+- `lib/models/` — Data models (`Sandwich`, `Cart`, `SavedOrder`).
+- `lib/views/` — UI Screens:
+    - `order_screen.dart`: Main ordering interface.
+    - `cart_screen.dart`: Shopping cart view.
+    - `checkout_screen.dart`: Order finalization.
+    - `order_history_screen.dart`: List of past orders.
+    - `settings_screen.dart`: User preferences.
+- `lib/services/database_service.dart` — SQLite database management for storing orders.
+- `lib/repositories/` — Data repositories (e.g., `pricing_repository.dart`).
+- `lib/widgets/` — Reusable UI components.
+- `assets/` — Images and data files.
 
 ## Technologies & Dependencies
 
-- Flutter (Dart)
-- Uses core Flutter widgets only (no third-party packages required).
+- **Flutter (Dart)**
+- **Provider**: State management.
+- **SQLite (sqflite)**: Local database for order history.
+- **Shared Preferences**: Persisting user settings.
+- **Firebase Core**: App initialization.
 
 ## Known Limitations & Future Improvements
 
-- No persistence: orders are kept in memory and lost on restart.
-- No backend: there's no order submission, authentication, or payment flow.
-- Basic styling: the UI is intentionally simple and intended for demonstration.
-
-Planned / suggested improvements
-
-- Persist orders locally (SQLite / shared_preferences).
-- Add an order confirmation screen and submit to a backend API.
-- Add integration tests and widget tests for UI flows.
+- **Backend**: Currently uses local storage. Syncing with a remote server is a planned improvement.
+- **Auth**: User authentication is not yet implemented.
 
 ## Contribution
 
