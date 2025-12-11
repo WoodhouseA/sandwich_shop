@@ -102,6 +102,35 @@ void main() {
       expect(find.text('Cart: 3 items - £33.00'), findsOneWidget);
     });
 
+    testWidgets('remove item from cart', (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+
+      // Add item to cart first
+      final addToCartButton = find.widgetWithText(StyledButton, 'Add to Cart');
+      await tester.ensureVisible(addToCartButton);
+      await tester.tap(addToCartButton);
+      await tester.pumpAndSettle();
+
+      // Go to cart
+      final viewCartButton = find.widgetWithText(StyledButton, 'View Cart');
+      await tester.ensureVisible(viewCartButton);
+      await tester.tap(viewCartButton);
+      await tester.pumpAndSettle();
+
+      // Verify item is there
+      expect(find.text('Veggie Delight'), findsOneWidget);
+
+      // Find delete button and tap it
+      final deleteButton = find.byIcon(Icons.delete);
+      await tester.tap(deleteButton);
+      await tester.pumpAndSettle();
+
+      // Verify cart is empty
+      expect(find.text('Your cart is empty.'), findsOneWidget);
+      expect(find.text('Veggie Delight'), findsNothing);
+    });
+
     testWidgets('complete checkout flow', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
@@ -134,7 +163,5 @@ void main() {
       expect(find.text('Sandwich Counter'), findsOneWidget);
       expect(find.text('Cart: 0 items - £0.00'), findsOneWidget);
     });
-
-    // Feel free to add more tests (e.g., to check saved orders, etc.)
   });
 }
