@@ -181,6 +181,34 @@ void main() {
       expect(find.text('Sandwich Counter'), findsOneWidget);
     });
 
+    testWidgets('view order history', (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+
+      // Navigate to Order History
+      final historyButton = find.widgetWithText(StyledButton, 'Order History');
+      await tester.ensureVisible(historyButton);
+      await tester.tap(historyButton);
+      await tester.pumpAndSettle();
+
+      expect(find.widgetWithText(AppBar, 'Order History'), findsOneWidget);
+      
+      // Check for either "No orders yet" or a list of orders
+      expect(find.byType(ResponsiveScaffold), findsOneWidget);
+
+      // Go back
+      final backButton = find.byIcon(Icons.arrow_back);
+      if (findsOneWidget.matches(backButton, {})) {
+         await tester.tap(backButton);
+      } else {
+         final navigator = tester.state<NavigatorState>(find.byType(Navigator));
+         navigator.pop();
+      }
+      await tester.pumpAndSettle();
+
+      expect(find.text('Sandwich Counter'), findsOneWidget);
+    });
+
     testWidgets('complete checkout flow', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
