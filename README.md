@@ -88,17 +88,6 @@ Top-level layout (important files/folders):
 - **Backend**: Currently uses local storage. Syncing with a remote server is a planned improvement.
 - **Auth**: User authentication is not yet implemented.
 
-## Contribution
-
-Contributions are welcome. Suggested workflow:
-
-1. Fork the repository.
-2. Create a feature branch (e.g., `feature/persistent-orders`).
-3. Add tests for new behavior.
-4. Open a pull request describing your changes.
-
-Please follow the existing code style and add unit tests where appropriate.
-
 ## Contact
 
 - Owner: WoodhouseA (GitHub) — https://github.com/WoodhouseA
