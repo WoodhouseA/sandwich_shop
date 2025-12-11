@@ -157,6 +157,30 @@ void main() {
       expect(find.text('Welcome, John Doe! Ordering from New York'), findsOneWidget);
     });
 
+    testWidgets('change font size in settings', (WidgetTester tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+
+      // Navigate to Settings
+      final settingsButton = find.widgetWithText(StyledButton, 'Settings');
+      await tester.ensureVisible(settingsButton);
+      await tester.tap(settingsButton);
+      await tester.pumpAndSettle();
+
+      expect(find.widgetWithText(AppBar, 'Settings'), findsOneWidget);
+
+      // Find slider and change value
+      final slider = find.byType(Slider);
+      await tester.drag(slider, const Offset(50, 0)); // Drag right to increase
+      await tester.pumpAndSettle();
+
+      final backButton = find.text('Back to Order');
+      await tester.tap(backButton);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Sandwich Counter'), findsOneWidget);
+    });
+
     testWidgets('complete checkout flow', (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
