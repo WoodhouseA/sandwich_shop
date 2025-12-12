@@ -50,8 +50,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const SandwichShopAppBar(title: 'Checkout'),
+    return ResponsiveScaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Consumer<Cart>(
@@ -137,7 +136,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             );
           },
         ),
-      ),
+      ), currentRoute: '/checkout',
     );
   }
 }
